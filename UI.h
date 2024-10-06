@@ -1,31 +1,22 @@
 #pragma once
-
-#include <SDL.h>
-
-#include "Grid.h"
-#include "Shapes.h"
+#include "Button.h"
+#include "QuitButton.h"
 
 class UI
 {
 public:
-    UI()
-    {
-        GridComponent.AddChild(
-            std::make_shared<Rectangle>());
-        GridComponent.AddChild(
-            std::make_shared<Circle>());
-    }
-
     void Render(SDL_Surface *Surface)
     {
-        GridComponent.Render(Surface);
+        MyButton.Render(Surface);
+        MyQuitButton.Render(Surface);
     }
 
     void HandleEvent(const SDL_Event &E)
     {
-        GridComponent.HandleEvent(E);
+        MyButton.HandleEvent(E);
+        MyQuitButton.HandleEvent(E);
     }
 
-private:
-    Grid GridComponent;
+    Button MyButton{50, 50, 50, 50};
+    QuitButton MyQuitButton{150, 50, 50, 50};
 };
