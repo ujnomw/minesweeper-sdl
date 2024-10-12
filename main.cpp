@@ -2,11 +2,14 @@
 #include <SDL.h>
 #include "Window.h"
 #include "UI.h"
+#include "Image.h"
 
 int main(int argc, char **argv)
 {
+    const std::string IMAGE_PATH = "assets/example.bmp";
     SDL_Init(SDL_INIT_VIDEO);
     Window GameWindow;
+    Image Example{IMAGE_PATH, GameWindow.GetSurface()->format};
     UI GameUI;
 
     SDL_Event Event;
@@ -23,7 +26,7 @@ int main(int argc, char **argv)
             }
         }
         GameWindow.Render();
-        GameUI.Render(GameWindow.GetSurface());
+        Example.Render(GameWindow.GetSurface());
         GameWindow.Update();
     }
 

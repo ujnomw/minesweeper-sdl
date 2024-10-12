@@ -5,7 +5,7 @@ public:
     {
         SDLWindow = SDL_CreateWindow(
             "My Program", SDL_WINDOWPOS_UNDEFINED,
-            SDL_WINDOWPOS_UNDEFINED, 200, 200, 0);
+            SDL_WINDOWPOS_UNDEFINED, 600, 300, 0);
     }
 
     void Render()
