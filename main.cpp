@@ -1,13 +1,15 @@
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include "Window.h"
 #include "UI.h"
 #include "Image.h"
 
 int main(int argc, char **argv)
 {
-    const std::string IMAGE_PATH = "assets/example.bmp";
+    const std::string IMAGE_PATH = "assets/example.png";
     SDL_Init(SDL_INIT_VIDEO);
+    IMG_Init(IMG_INIT_PNG);
     Window GameWindow;
     Image Example{IMAGE_PATH, GameWindow.GetSurface()->format};
     UI GameUI;
@@ -30,6 +32,7 @@ int main(int argc, char **argv)
         GameWindow.Update();
     }
 
+    IMG_Quit();
     SDL_Quit();
     return 0;
 }
