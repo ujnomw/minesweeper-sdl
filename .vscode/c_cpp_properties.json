@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Mac",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/Library/Frameworks/SDL2.framework/Versions/A/Headers",
+        "/Library/Frameworks/SDL2_image.framework/Versions/A/Headers"
+      ],
+      "defines": [],
+      "macFrameworkPath": ["/Library/Frameworks"],
+      "compilerPath": "/usr/bin/clang",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "macos-clang-arm64",
+      "configurationProvider": "ms-vscode.cmake-tools"
+    }
+  ],
+  "version": 4
+}
