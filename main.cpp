@@ -1,9 +1,11 @@
-#include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Window.h"
-#include "UI.h"
+
+#include <iostream>
+
 #include "Image.h"
+#include "UI.h"
+#include "Window.h"
 
 int main(int argc, char **argv)
 {
@@ -11,7 +13,9 @@ int main(int argc, char **argv)
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
     Window GameWindow;
-    Image Example{IMAGE_PATH, GameWindow.GetSurface()->format};
+    SDL_Rect Src{0, 0, 200, 200};
+    SDL_Rect Dest{0, 0, GameWindow.GetSurface()->w, GameWindow.GetSurface()->h};
+    Image Example{IMAGE_PATH, Src, Dest, ScallingMode::Contain};
     UI GameUI;
 
     SDL_Event Event;

@@ -4,7 +4,15 @@ set(CMAKE_CXX_STANDARD 23)
 
 project(Sandbox VERSION 1.0.0)
 
-add_executable(Sandbox main.cpp)
+# Assets
+set(ASSETS_SOURCES
+    Image.cpp
+    )
+
+add_executable(Sandbox
+              main.cpp
+              ${ASSETS_SOURCES}
+              )
 
 # Variables storing SDL framework locations
 set(SDL2
