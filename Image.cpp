@@ -1,49 +1,83 @@
 #include "Image.h"
 
-Image::Image(const std::string &file, const SDL_Rect &sourceRect,
-             const SDL_Rect &destinationRect, ScallingMode i_scallingMode)
-    : d_scallingMode(i_scallingMode)
+Image::Image(const std::string &file, const SourceRect &sourceRect,
+             const DestRect &destinationRect, ScallingMode i_scallingMode,
+             SDL_PixelFormat *format)
+    : d_scallingMode(i_scallingMode), d_preferredFormat(format)
 {
     loadFile(file);
     SetSourceRectangle(sourceRect);
     SetDestinationRectangle(destinationRect);
 }
 
+Image::Image(const std::string &file, ScallingMode i_scallingMode,
+             SDL_PixelFormat *format)
+    : d_scallingMode(i_scallingMode), d_preferredFormat(format)
+{
+    loadFile(file);
+    SetSourceRectangle({0, 0, d_imageSurface->w, d_imageSurface->h});
+    SetDestinationRectangle(d_appliedSrcRectangle);
+}
+
+Image::Image(const std::string &file, const DestRect &destinationRect,
+             ScallingMode i_scallingMode, SDL_PixelFormat *format)
+    : d_scallingMode(i_scallingMode), d_preferredFormat(format)
+{
+    loadFile(file);
+    SetSourceRectangle({0, 0, d_imageSurface->w, d_imageSurface->h});
+    SetDestinationRectangle(destinationRect);
+}
+
+Image::Image(const std::string &file, const SourceRect &sourceRect,
+             ScallingMode i_scallingMode, SDL_PixelFormat *format)
+    : d_scallingMode(i_scallingMode), d_preferredFormat(format)
+{
+    loadFile(file);
+    SetSourceRectangle(sourceRect);
+    SetDestinationRectangle(d_appliedSrcRectangle);
+}
+
 void Image::Render(SDL_Surface *surface)
 {
     if (d_scallingMode == ScallingMode::None)
     {
-        SDL_BlitSurface(d_ImageSurface, &d_appliedSrcRectangle, surface,
+        SDL_BlitSurface(d_imageSurface, &d_appliedSrcRectangle, surface,
                         &d_appliedDestRectangle);
     }
     else
     {
-        SDL_BlitScaled(d_ImageSurface, &d_appliedSrcRectangle, surface,
+        SDL_BlitScaled(d_imageSurface, &d_appliedSrcRectangle, surface,
                        &d_appliedDestRectangle);
     }
 }
 
 void Image::loadFile(const std::string &file)
 {
-    if (file == d_File)
+    if (file == d_File) return;
+    SDL_Surface *nextSurface = IMG_Load(file.c_str());
+    if (validateSurface(nextSurface, "loading file"))
     {
-        return;
+        SDL_FreeSurface(d_imageSurface);
+        d_File = file;
+        d_imageSurface = nextSurface;
     }
-    SDL_FreeSurface(d_ImageSurface);
-    d_File = file;
-    d_ImageSurface = IMG_Load(file.c_str());
+
+    if (d_preferredFormat)
+    {
+        convertSurface();
+    }
 }
 
 void Image::SetSourceRectangle(const SDL_Rect &rect)
 {
     d_requestedSrcRectangle = rect;
-    if (validateRectangle(rect, d_ImageSurface, "Source Rectangle"))
+    if (validateRectangle(rect, d_imageSurface, "Source Rectangle"))
     {
         d_appliedSrcRectangle = rect;
     }
     else
     {
-        d_appliedSrcRectangle = {0, 0, d_ImageSurface->w, d_ImageSurface->h};
+        d_appliedSrcRectangle = {0, 0, d_imageSurface->w, d_imageSurface->h};
     }
 }
 
@@ -59,6 +93,49 @@ void Image::SetDestinationRectangle(const SDL_Rect &rect)
     else
     {
         d_appliedDestRectangle = {0, 0, d_appliedSrcRectangle.w, d_appliedSrcRectangle.h};
+    }
+}
+
+void Image::SetFile(const std::string &file)
+{
+    loadFile(file);
+    SetSourceRectangle({0, 0, d_imageSurface->w, d_imageSurface->h});
+}
+
+void Image::SetFile(const std::string &file, const SourceRect &sourceRect)
+{
+    loadFile(file);
+    SetSourceRectangle(sourceRect);
+}
+
+void Image::SetScallingMode(ScallingMode i_mode)
+{
+    d_scallingMode = i_mode;
+    SetDestinationRectangle(d_appliedSrcRectangle);
+}
+void Image::SetScallingMode(ScallingMode i_mode, const DestRect &destRect)
+{
+    d_scallingMode = i_mode;
+    SetDestinationRectangle(destRect);
+}
+
+void Image::SetPreferredFormat(SDL_PixelFormat *i_format)
+{
+    d_preferredFormat = i_format;
+    convertSurface();
+}
+
+// Private methods
+
+void Image::convertSurface()
+{
+    SDL_Surface *convertedSurface =
+        SDL_ConvertSurface(d_imageSurface, d_preferredFormat, 0);
+
+    if (validateSurface(convertedSurface, "convert surface"))
+    {
+        SDL_FreeSurface(d_imageSurface);
+        d_imageSurface = convertedSurface;
     }
 }
 
@@ -87,6 +164,16 @@ bool Image::validateRectangle(const SDL_Rect &rect, const SDL_Surface *surface,
     return true;
 }
 
+bool Image::validateSurface(const SDL_Surface *surface, const std::string &context)
+{
+    if (!surface)
+    {
+        std::cout << "[ERR]" << context << ": " << SDL_GetError() << '\n';
+        return false;
+    }
+    return true;
+}
+
 SDL_Rect Image::matchAspectRatio(const SDL_Rect &source, const SDL_Rect &target)
 {
     // The aspect of the rect INSIDE WHICH we will render
@@ -108,4 +195,6 @@ SDL_Rect Image::matchAspectRatio(const SDL_Rect &source, const SDL_Rect &target)
     return result;
 }
 
-Image::~Image() { SDL_FreeSurface(d_ImageSurface); }
+// Destructors
+
+Image::~Image() { SDL_FreeSurface(d_imageSurface); }

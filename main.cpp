@@ -13,8 +13,8 @@ int main(int argc, char **argv)
     SDL_Init(SDL_INIT_VIDEO);
     IMG_Init(IMG_INIT_PNG);
     Window GameWindow;
-    SDL_Rect Src{0, 0, 200, 200};
-    SDL_Rect Dest{0, 0, GameWindow.GetSurface()->w, GameWindow.GetSurface()->h};
+    const SourceRect Src{0, 0, 200, 200};
+    const DestRect Dest{0, 0, GameWindow.GetSurface()->w, GameWindow.GetSurface()->h};
     Image Example{IMAGE_PATH, Src, Dest, ScallingMode::Contain};
     UI GameUI;
 
