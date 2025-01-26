@@ -1,26 +1,29 @@
-#include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-#include <iostream>
+#include "Engine/Window.h"
+#include "Globals.h"
+#include "Minesweeper/UI.h"
 
-#include "Image.h"
-#include "Text.h"
-#include "UI.h"
-#include "Window.h"
-
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-    const std::string IMAGE_PATH = "assets/example.png";
     SDL_Init(SDL_INIT_VIDEO);
+#ifdef SHOW_DEBUG_HELPERS
+    Utils::CheckSDLError("SDL_Init");
+#endif
+
     IMG_Init(IMG_INIT_PNG);
+#ifdef SHOW_DEBUG_HELPERS
+    Utils::CheckSDLError("IMG_Init");
+#endif
+
     TTF_Init();
-    Window GameWindow;
-    const SourceRect Src{0, 0, 200, 200};
-    const DestRect Dest{0, 0, GameWindow.GetSurface()->w, GameWindow.GetSurface()->h};
-    Image Example{IMAGE_PATH, Src, Dest, ScallingMode::Contain};
-    Text TextExample{"Hello world"};
-    UI GameUI;
+#ifdef SHOW_DEBUG_HELPERS
+    Utils::CheckSDLError("TTF_Init");
+#endif
+
+    Engine::Window GameWindow;
+    MinesweeperUI UI;
 
     SDL_Event Event;
     bool shouldQuit{false};
@@ -29,19 +32,20 @@ int main(int argc, char **argv)
     {
         while (SDL_PollEvent(&Event))
         {
-            GameUI.HandleEvent(Event);
             if (Event.type == SDL_QUIT)
             {
                 shouldQuit = true;
             }
+            else
+            {
+                UI.HandleEvent(Event);
+            }
         }
         GameWindow.Render();
-        TextExample.Render(GameWindow.GetSurface());
+        UI.Render(GameWindow.GetSurface());
         GameWindow.Update();
     }
 
-    IMG_Quit();
     SDL_Quit();
-    TTF_Quit();
     return 0;
 }

@@ -1,15 +1,18 @@
 #pragma once
+#include "../Globals.h"
 #include "Rectangle.h"
+
+namespace Engine
+{
 
 class Button : public Rectangle
 {
-public:
-    Button(int x, int y, int w, int h) : Rectangle{x, y, w, h, {0, 255, 0}} {}
+   public:
+    Button(int x, int y, int w, int h) : Rectangle{x, y, w, h, Config::BUTTON_COLOR} {}
 
     void HandleEvent(const SDL_Event &E)
     {
-        if (isDisabled)
-            return;
+        if (isDisabled) return;
         if (E.type == SDL_MOUSEMOTION)
         {
             HandleMouseMotion(E.motion);
@@ -20,27 +23,16 @@ public:
         }
     }
 
-protected:
+   protected:
     virtual void HandleLeftClick() {}
     virtual void HandleRightClick() {}
 
-    void SetIsDisabled(bool newValue)
-    {
-        isDisabled = newValue;
-    }
-    virtual void HandleMouseEnter()
-    {
-        SetColor({255, 0, 0});
-    }
+    void SetIsDisabled(bool newValue) { isDisabled = newValue; }
+    virtual void HandleMouseEnter() { SetColor(Config::BUTTON_HOVER_COLOR); }
 
-    virtual void HandleMouseExit()
-    {
-        SetColor({0, 255, 0});
-    }
+    virtual void HandleMouseExit() { SetColor(Config::BUTTON_COLOR); }
 
-private:
-    void HandleMouseMotion(
-        const SDL_MouseMotionEvent &E)
+    void HandleMouseMotion(const SDL_MouseMotionEvent &E)
     {
         if (IsWithinBounds(E.x, E.y))
         {
@@ -51,8 +43,7 @@ private:
             HandleMouseExit();
         }
     }
-    void HandleMouseButton(
-        const SDL_MouseButtonEvent &E)
+    void HandleMouseButton(const SDL_MouseButtonEvent &E)
     {
         if (IsWithinBounds(E.x, E.y))
         {
@@ -68,5 +59,7 @@ private:
         }
     }
 
+   private:
     bool isDisabled{false};
 };
+}  // namespace Engine

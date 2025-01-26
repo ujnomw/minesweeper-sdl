@@ -1,16 +1,26 @@
+#pragma once
+#include <SDL.h>
+
+#include "../Globals.h"
+
+namespace Engine
+{
+
 class Window
 {
    public:
     Window()
     {
         SDLWindow = SDL_CreateWindow("My Program", SDL_WINDOWPOS_UNDEFINED,
-                                     SDL_WINDOWPOS_UNDEFINED, 600, 300, 0);
+                                     SDL_WINDOWPOS_UNDEFINED, Config::WINDOW_WIDTH,
+                                     Config::WINDOW_HEIGHT, 0);
     }
 
     void Render()
     {
         SDL_FillRect(GetSurface(), nullptr,
-                     SDL_MapRGB(GetSurface()->format, 136, 196, 138));
+                     SDL_MapRGB(GetSurface()->format, Config::BACKGROUND_COLOR.r,
+                                Config::BACKGROUND_COLOR.g, Config::BACKGROUND_COLOR.b));
     }
 
     void Update() { SDL_UpdateWindowSurface(SDLWindow); }
@@ -25,3 +35,4 @@ class Window
    private:
     SDL_Window *SDLWindow;
 };
+}  // namespace Engine

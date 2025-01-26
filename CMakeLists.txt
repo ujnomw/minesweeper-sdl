@@ -4,14 +4,24 @@ set(CMAKE_CXX_STANDARD 23)
 
 project(Sandbox VERSION 1.0.0)
 
-# Assets
-set(ASSETS_SOURCES
-    Image.cpp
-    )
 
 add_executable(Sandbox
               main.cpp
-              ${ASSETS_SOURCES}
+              Globals.h
+              "Engine/Button.h"
+              "Engine/Rectangle.h"
+              "Engine/Image.h"
+              "Engine/Text.h"
+              "Engine/Window.h"
+              "Engine/Random.h"
+              "Minesweeper/UI.h"
+
+              # Files that will be added later:
+              # "Minesweeper/Grid.h"
+              # "Minesweeper/UI.h"
+              # "Minesweeper/Cell.h"
+              # "Minesweeper/Cell.cpp"
+              # "Minesweeper/NewGameButton.h"
               )
 
 # Variables storing SDL framework locations
