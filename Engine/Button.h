@@ -10,7 +10,7 @@ class Button : public Rectangle
    public:
     Button(int x, int y, int w, int h) : Rectangle{x, y, w, h, Config::BUTTON_COLOR} {}
 
-    void HandleEvent(const SDL_Event &E)
+    void virtual HandleEvent(const SDL_Event &E)
     {
         if (isDisabled) return;
         if (E.type == SDL_MOUSEMOTION)

@@ -16,11 +16,10 @@ add_executable(Sandbox
               "Engine/Random.h"
               "Minesweeper/UI.h"
 
-              # Files that will be added later:
-              # "Minesweeper/Grid.h"
-              # "Minesweeper/UI.h"
-              # "Minesweeper/Cell.h"
-              # "Minesweeper/Cell.cpp"
+              "Minesweeper/Grid.h"
+              "Minesweeper/UI.h"
+              "Minesweeper/Cell.h"
+              "Minesweeper/Cell.cpp"
               # "Minesweeper/NewGameButton.h"
               )
 
@@ -41,6 +40,7 @@ target_link_libraries(
 
 target_include_directories(
   Sandbox PRIVATE
+  ${CMAKE_SOURCE_DIR}
   ${SDL2}/Versions/A/Headers
   ${SDL2_image}/Versions/A/Headers
   ${SDL2_ttf}/Versions/A/Headers
