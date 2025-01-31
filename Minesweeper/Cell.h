@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Button.h"
+#include "Engine/Image.h"
 
 class MinesweeperCell : public Engine::Button
 {
@@ -8,6 +9,8 @@ class MinesweeperCell : public Engine::Button
 
     void HandleEvent(const SDL_Event& E) override;
     void Render(SDL_Surface* Surface) override;
+
+    bool PlaceBomb();
 
     [[nodiscard]]
     int GetRow() const
@@ -21,6 +24,9 @@ class MinesweeperCell : public Engine::Button
         return Col;
     }
 
+    [[nodiscard]]
+    bool GetHasBomb() const;
+
    protected:
     void HandleLeftClick() override;
 
@@ -28,8 +34,10 @@ class MinesweeperCell : public Engine::Button
     void ClearCell();
     void ReportEvent(uint32_t EventType);
     bool isCleared{false};
+    bool hasBomb{false};
 
    private:
     int Row;
     int Col;
+    Engine::Image BombImage;
 };

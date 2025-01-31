@@ -5,7 +5,7 @@
 #include "Globals.h"
 
 MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col)
-    : Button{x, y, w, h}, Row{Row}, Col{Col} {};
+    : Button{x, y, w, h}, Row{Row}, Col{Col}, BombImage{x, y, w, h, Config::BOMB_PATH} {};
 
 void MinesweeperCell::HandleEvent(const SDL_Event& E)
 {
@@ -13,6 +13,11 @@ void MinesweeperCell::HandleEvent(const SDL_Event& E)
     {
         // TODO
         std::cout << "A Cell Was Cleared\n";
+    }
+    else if (E.type == UserEvents::BOMB_PLACED)
+    {
+        // TODO
+        std::cout << "A Bomb was Placed\n";
     }
     Button::HandleEvent(E);
 }
@@ -33,6 +38,30 @@ void MinesweeperCell::ReportEvent(uint32_t EventType)
     SDL_PushEvent(&event);
 }
 
+bool MinesweeperCell::PlaceBomb()
+{
+    if (hasBomb) return false;
+    hasBomb = true;
+    ReportEvent(UserEvents::BOMB_PLACED);
+    return true;
+}
+
 void MinesweeperCell::HandleLeftClick() { ClearCell(); }
 
-void MinesweeperCell::Render(SDL_Surface* Surface) { Button::Render(Surface); }
+void MinesweeperCell::Render(SDL_Surface* Surface)
+{
+    Button::Render(Surface);
+    if (isCleared && hasBomb)
+    {
+        BombImage.Render(Surface);
+    }
+
+#ifdef SHOW_DEBUG_HELPERS
+    else if (hasBomb)
+    {
+        BombImage.Render(Surface);
+    }
+#endif
+}
+
+bool MinesweeperCell::GetHasBomb() const { return hasBomb; }

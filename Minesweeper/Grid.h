@@ -3,6 +3,7 @@
 
 #include "../Globals.h"
 #include "Cell.h"
+#include "Engine/Random.h"
 
 class MinesweeperGrid
 {
@@ -21,6 +22,7 @@ class MinesweeperGrid
                                       Row, Col);
             }
         }
+        PlaceBombs();
     }
 
     void Render(SDL_Surface* Surface)
@@ -36,6 +38,20 @@ class MinesweeperGrid
         for (auto& Child : Children)
         {
             Child.HandleEvent(E);
+        }
+    }
+
+   private:
+    void PlaceBombs()
+    {
+        int bombsToPlace{Config::BOMB_COUNT};
+        while (bombsToPlace > 0)
+        {
+            const size_t bombIndex = Engine::Random::Int(0, Children.size() - 1);
+            if (Children[bombIndex].PlaceBomb())
+            {
+                --bombsToPlace;
+            }
         }
     }
 

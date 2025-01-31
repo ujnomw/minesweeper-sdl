@@ -15,8 +15,13 @@ namespace Config
 {
 // Game Settings
 inline const std::string GAME_NAME{"Minesweeper"};
+
+inline constexpr int BOMB_COUNT{6};
+
 inline constexpr int GRID_COLUMNS{8};
 inline constexpr int GRID_ROWS{4};
+
+static_assert(BOMB_COUNT < GRID_COLUMNS * GRID_ROWS, "Cannot have more bombs than cells");
 
 // Size and Positioning
 inline constexpr int PADDING{5};
@@ -37,12 +42,14 @@ inline constexpr SDL_Color BUTTON_CLEARED_COLOR{240, 240, 240, 255};
 
 // Asset Paths
 inline const std::string FONT{"assets/Roboto-Medium.ttf"};
+inline const std::string BOMB_PATH{"assets/bomb.png"};
 }  // namespace Config
 
 namespace UserEvents
 {
 inline Uint32 CELL_CLEARED = SDL_RegisterEvents(1);
-}
+inline Uint32 BOMB_PLACED = SDL_RegisterEvents(1);
+}  // namespace UserEvents
 
 namespace Utils
 {
