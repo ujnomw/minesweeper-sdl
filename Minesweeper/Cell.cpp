@@ -5,19 +5,23 @@
 #include "Globals.h"
 
 MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col)
-    : Button{x, y, w, h}, Row{Row}, Col{Col}, BombImage{x, y, w, h, Config::BOMB_PATH} {};
+    : Button{x, y, w, h},
+      Row{Row},
+      Col{Col},
+      BombImage{x, y, w, h, Config::BOMB_PATH},
+      Text{
+          x, y, w, h, std::to_string(AdjacentBombs), Config::TEXT_COLORS[AdjacentBombs]} {
+      };
 
 void MinesweeperCell::HandleEvent(const SDL_Event& E)
 {
     if (E.type == UserEvents::CELL_CLEARED)
     {
-        // TODO
-        std::cout << "A Cell Was Cleared\n";
+        handleCellCleared(E.user);
     }
     else if (E.type == UserEvents::BOMB_PLACED)
     {
-        // TODO
-        std::cout << "A Bomb was Placed\n";
+        handleBombPlaced(E.user);
     }
     Button::HandleEvent(E);
 }
@@ -55,6 +59,10 @@ void MinesweeperCell::Render(SDL_Surface* Surface)
     {
         BombImage.Render(Surface);
     }
+    else if (isCleared && AdjacentBombs > 0)
+    {
+        Text.Render(Surface);
+    }
 
 #ifdef SHOW_DEBUG_HELPERS
     else if (hasBomb)
@@ -65,3 +73,31 @@ void MinesweeperCell::Render(SDL_Surface* Surface)
 }
 
 bool MinesweeperCell::GetHasBomb() const { return hasBomb; }
+
+bool MinesweeperCell::isAdjustend(MinesweeperCell* i_other) const
+{
+    return (this != i_other) && (abs(GetRow() - i_other->GetRow()) <= 1) &&
+           (abs(GetCol() - i_other->GetCol()) <= 1);
+}
+
+void MinesweeperCell::handleBombPlaced(const SDL_UserEvent& E)
+{
+    MinesweeperCell* cell{static_cast<MinesweeperCell*>(E.data1)};
+    if (isAdjustend(cell))
+    {
+        ++AdjacentBombs;
+        Text.SetText(std::to_string(AdjacentBombs), Config::TEXT_COLORS[AdjacentBombs]);
+    }
+}
+
+void MinesweeperCell::handleCellCleared(const SDL_UserEvent& E)
+{
+    MinesweeperCell* cell{static_cast<MinesweeperCell*>(E.data1)};
+
+    if (cell->hasBomb) return;
+
+    if (isAdjustend(cell) && cell->AdjacentBombs == 0)
+    {
+        ClearCell();
+    }
+}
