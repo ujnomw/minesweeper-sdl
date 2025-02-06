@@ -23,6 +23,23 @@ void MinesweeperCell::HandleEvent(const SDL_Event& E)
     {
         handleBombPlaced(E.user);
     }
+    else if (E.type == UserEvents::GAME_WON)
+    {
+        if (hasBomb)
+        {
+            SetColor(Config::BUTTON_SUCCESS_COLOR);
+        }
+        SetIsDisabled(true);
+    }
+    else if (E.type == UserEvents::GAME_LOST)
+    {
+        if (hasBomb)
+        {
+            isCleared = true;
+            SetColor(Config::BUTTON_FAILURE_COLOR);
+        }
+        SetIsDisabled(true);
+    }
     Button::HandleEvent(E);
 }
 
@@ -92,7 +109,7 @@ void MinesweeperCell::handleBombPlaced(const SDL_UserEvent& E)
 
 void MinesweeperCell::handleCellCleared(const SDL_UserEvent& E)
 {
-    MinesweeperCell* cell{static_cast<MinesweeperCell*>(E.data1)};
+    auto* cell{static_cast<MinesweeperCell*>(E.data1)};
 
     if (cell->hasBomb) return;
 
@@ -100,4 +117,13 @@ void MinesweeperCell::handleCellCleared(const SDL_UserEvent& E)
     {
         ClearCell();
     }
+}
+
+void MinesweeperCell::Reset()
+{
+    isCleared = false;
+    hasBomb = false;
+    AdjacentBombs = 0;
+    SetIsDisabled(false);
+    SetColor(Config::BUTTON_COLOR);
 }

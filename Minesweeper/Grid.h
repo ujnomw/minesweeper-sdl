@@ -35,6 +35,18 @@ class MinesweeperGrid
 
     void HandleEvent(const SDL_Event& E)
     {
+        if (E.type == UserEvents::CELL_CLEARED)
+        {
+            handleCellCleared(E.user);
+        }
+        else if (E.type == UserEvents::NEW_GAME)
+        {
+            for (auto& Child : Children)
+            {
+                Child.Reset();
+            }
+            PlaceBombs();
+        }
         for (auto& Child : Children)
         {
             Child.HandleEvent(E);
@@ -45,6 +57,7 @@ class MinesweeperGrid
     void PlaceBombs()
     {
         int bombsToPlace{Config::BOMB_COUNT};
+        cellsToClear = Config::GRID_ROWS * Config::GRID_COLUMNS - Config::BOMB_COUNT;
         while (bombsToPlace > 0)
         {
             const size_t bombIndex = Engine::Random::Int(0, Children.size() - 1);
@@ -54,6 +67,26 @@ class MinesweeperGrid
             }
         }
     }
+    void handleCellCleared(const SDL_UserEvent& E)
+    {
+        auto* cell{static_cast<MinesweeperCell*>(E.data1)};
+
+        if (cell->GetHasBomb())
+        {
+            SDL_Event Event{UserEvents::GAME_LOST};
+            SDL_PushEvent(&Event);
+        }
+        else
+        {
+            --cellsToClear;
+            if (cellsToClear == 0)
+            {
+                SDL_Event Event{UserEvents::GAME_WON};
+                SDL_PushEvent(&Event);
+            }
+        }
+    }
 
     std::vector<MinesweeperCell> Children;
+    int cellsToClear;
 };
