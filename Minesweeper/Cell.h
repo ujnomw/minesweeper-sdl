@@ -34,18 +34,21 @@ class MinesweeperCell : public Engine::Button
 
    protected:
     void HandleLeftClick() override;
+    void HandleRightClick() override;
 
    private:
     void ClearCell();
     void ReportEvent(uint32_t EventType);
-    bool isCleared{false};
-    bool hasBomb{false};
     void handleBombPlaced(const SDL_UserEvent& E);
     void handleCellCleared(const SDL_UserEvent& E);
 
    private:
+    bool isCleared{false};
+    bool hasBomb{false};
+    bool hasFlag{false};
     int Row;
     int Col;
     Engine::Image BombImage;
+    Engine::Image FlagImage;
     Engine::Text Text;
 };

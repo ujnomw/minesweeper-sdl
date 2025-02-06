@@ -9,6 +9,7 @@ MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col)
       Row{Row},
       Col{Col},
       BombImage{x, y, w, h, Config::BOMB_PATH},
+      FlagImage{x, y, w, h, Config::FLAG_IMAGE},
       Text{
           x, y, w, h, std::to_string(AdjacentBombs), Config::TEXT_COLORS[AdjacentBombs]} {
       };
@@ -27,6 +28,7 @@ void MinesweeperCell::HandleEvent(const SDL_Event& E)
     {
         if (hasBomb)
         {
+            hasFlag = true;
             SetColor(Config::BUTTON_SUCCESS_COLOR);
         }
         SetIsDisabled(true);
@@ -45,7 +47,7 @@ void MinesweeperCell::HandleEvent(const SDL_Event& E)
 
 void MinesweeperCell::ClearCell()
 {
-    if (isCleared) return;
+    if (isCleared || hasFlag) return;
     isCleared = true;
     SetIsDisabled(true);
     SetColor(Config::BUTTON_CLEARED_COLOR);
@@ -67,12 +69,19 @@ bool MinesweeperCell::PlaceBomb()
     return true;
 }
 
-void MinesweeperCell::HandleLeftClick() { ClearCell(); }
+void MinesweeperCell::HandleLeftClick()
+{
+    if (!hasFlag) ClearCell();
+}
 
 void MinesweeperCell::Render(SDL_Surface* Surface)
 {
     Button::Render(Surface);
-    if (isCleared && hasBomb)
+    if (hasFlag)
+    {
+        FlagImage.Render(Surface);
+    }
+    else if (isCleared && hasBomb)
     {
         BombImage.Render(Surface);
     }
@@ -122,8 +131,23 @@ void MinesweeperCell::handleCellCleared(const SDL_UserEvent& E)
 void MinesweeperCell::Reset()
 {
     isCleared = false;
+    hasFlag = false;
     hasBomb = false;
     AdjacentBombs = 0;
     SetIsDisabled(false);
     SetColor(Config::BUTTON_COLOR);
+}
+
+void MinesweeperCell::HandleRightClick()
+{
+    if (hasFlag)
+    {
+        ReportEvent(UserEvents::FLAG_CLEARED);
+        hasFlag = false;
+    }
+    else
+    {
+        ReportEvent(UserEvents::FLAG_PLACED);
+        hasFlag = true;
+    }
 }

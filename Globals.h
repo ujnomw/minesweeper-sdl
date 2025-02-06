@@ -1,6 +1,6 @@
 #pragma once
 
-#define SHOW_DEBUG_HELPERS
+// #define SHOW_DEBUG_HELPERS
 
 #include <SDL.h>
 
@@ -28,6 +28,7 @@ static_assert(BOMB_COUNT < GRID_COLUMNS * GRID_ROWS, "Cannot have more bombs tha
 inline constexpr int PADDING{5};
 inline constexpr int CELL_SIZE{50};
 inline constexpr int FOOTER_HEIGHT{60};
+inline constexpr int FLAG_COUNTER_WIDTH{100};
 
 inline constexpr int GRID_HEIGHT{CELL_SIZE * GRID_ROWS + PADDING * (GRID_ROWS - 1)};
 
@@ -43,6 +44,7 @@ inline constexpr SDL_Color BUTTON_HOVER_COLOR{220, 220, 220, 255};
 inline constexpr SDL_Color BUTTON_CLEARED_COLOR{240, 240, 240, 255};
 inline constexpr SDL_Color BUTTON_SUCCESS_COLOR{210, 235, 210, 255};
 inline constexpr SDL_Color BUTTON_FAILURE_COLOR{235, 210, 210, 255};
+inline constexpr SDL_Color FLAG_COUNTER_COLOR{80, 80, 80, 255};
 
 inline const std::vector<SDL_Color> TEXT_COLORS{/* 0 */ {0, 0, 0, 255},  // Unused
                                                 /* 1 */ {0, 1, 249, 255},
@@ -57,6 +59,7 @@ inline const std::vector<SDL_Color> TEXT_COLORS{/* 0 */ {0, 0, 0, 255},  // Unus
 // Asset Paths
 inline const std::string FONT{"assets/Roboto-Medium.ttf"};
 inline const std::string BOMB_PATH{"assets/bomb.png"};
+inline const std::string FLAG_IMAGE{"assets/flag.png"};
 }  // namespace Config
 
 namespace UserEvents
@@ -66,6 +69,8 @@ inline Uint32 BOMB_PLACED = SDL_RegisterEvents(1);
 inline Uint32 GAME_WON = SDL_RegisterEvents(1);
 inline Uint32 GAME_LOST = SDL_RegisterEvents(1);
 inline Uint32 NEW_GAME = SDL_RegisterEvents(1);
+inline Uint32 FLAG_PLACED = SDL_RegisterEvents(1);
+inline Uint32 FLAG_CLEARED = SDL_RegisterEvents(1);
 }  // namespace UserEvents
 
 namespace Utils
