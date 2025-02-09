@@ -1,6 +1,7 @@
 #pragma once
 
 // #define SHOW_DEBUG_HELPERS
+// #define FRAME_PERF_DEBUG
 
 #include <SDL.h>
 
