@@ -10,7 +10,7 @@
       "macFrameworkPath": ["/Library/Frameworks"],
       "compilerPath": "/usr/bin/clang",
       "cStandard": "c17",
-      "cppStandard": "c++17",
+      "cppStandard": "c++23",
       "intelliSenseMode": "macos-clang-arm64",
       "configurationProvider": "ms-vscode.cmake-tools"
     }
