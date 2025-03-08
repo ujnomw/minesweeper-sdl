@@ -2,7 +2,9 @@
 
 #include "Globals.h"
 #include "Grid.h"
-#include "Minesweeper/FlagCounter.h"
+#include "memory"
+// #include "Minesweeper/FlagCounter.h"
+#include "Minesweeper/CompositionUIElements/FlagCounter.h"
 #include "Minesweeper/NewGameButton.h"
 
 class MinesweeperUI
@@ -28,8 +30,11 @@ class MinesweeperUI
         Config::PADDING, Config::GRID_HEIGHT + Config::PADDING * 2,
         Config::WINDOW_WIDTH - Config::PADDING * 3 - Config::FLAG_COUNTER_WIDTH,
         Config::FOOTER_HEIGHT - Config::PADDING};
-    FlagCounter Counter{
+    C_UI::FlagCounter Counter{
         Config::WINDOW_WIDTH - Config::PADDING - Config::FLAG_COUNTER_WIDTH,
-        Config::GRID_HEIGHT + Config::PADDING * 2, Config::FLAG_COUNTER_WIDTH,
-        Config::FOOTER_HEIGHT - Config::PADDING};
+        Config::GRID_HEIGHT + Config::PADDING * 2,
+        Config::FLAG_COUNTER_WIDTH,
+        Config::FOOTER_HEIGHT - Config::PADDING,
+        std::make_unique<C_UI::FlagCounterRenderStrategy>(),
+        std::make_unique<C_UI::FlagCounterHandleEventStrategy>()};
 };

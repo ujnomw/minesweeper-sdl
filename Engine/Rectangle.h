@@ -39,7 +39,7 @@ class Rectangle
 
    private:
     // SDL_Rect Rect{0, 0, 0, 0};
-    Box d_box;
+    Layout::Box d_box;
     SDL_Color Color{0, 0, 0, 0};
 };
 }  // namespace Engine

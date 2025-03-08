@@ -10,6 +10,9 @@
 //     int d_y{0};
 // };
 
+namespace Layout
+{
+
 using Bounds = SDL_Rect;
 
 class IBox
@@ -29,6 +32,7 @@ class Box : public IBox
     Bounds d_bounds{0, 0, 0, 0};
 
    public:
+    Box() {};
     Box(int x, int y, int w, int h) : d_bounds{x, y, w, h} {};
     Bounds& GetBoundsRef() override { return d_bounds; };
     Bounds GetBounds() const override { return d_bounds; };
@@ -47,3 +51,4 @@ class Box : public IBox
         return true;
     };
 };
+}  // namespace Layout
