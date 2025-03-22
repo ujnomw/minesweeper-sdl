@@ -1,4 +1,5 @@
 #pragma once
+#include <SDL.h>
 #include <SDL_ttf.h>
 
 #include "Globals.h"
@@ -8,6 +9,7 @@ namespace Engine
 class Text
 {
    public:
+    Text() {};
     Text(int x, int y, int w, int h, const std::string& Content,
          SDL_Color Color = {0, 0, 0, 255}, int FontSize = 30)
         : DestinationRect{x, y, w, h}, Color{Color}
@@ -31,16 +33,23 @@ class Text
 
         TextSurface = TTF_RenderUTF8_Blended(Font, Text.c_str(), Color);
 
-        auto [x, y, w, h] = DestinationRect;
-        // Horizontally centering
-        const int WidthDifference{w - TextSurface->w};
-        const int LeftOffset{WidthDifference / 2};
+        // auto [x, y, w, h] = DestinationRect;
+        // // Horizontally centering
+        // const int WidthDifference{w - TextSurface->w};
+        // const int LeftOffset{WidthDifference / 2};
 
-        // Vertically centering
-        const int HeightDifference{h - TextSurface->h};
-        const int TopOffset{HeightDifference / 2};
+        // // Vertically centering
+        // const int HeightDifference{h - TextSurface->h};
+        // const int TopOffset{HeightDifference / 2};
 
-        TextPosition = {x + LeftOffset, y + TopOffset, w, h};
+        // TextPosition = {x + LeftOffset, y + TopOffset, w, h};
+        updateTextPosition();
+    }
+
+    void SetDestinationRect(SDL_Rect i_rect)
+    {
+        DestinationRect = i_rect;
+        updateTextPosition();
     }
 
     void Render(SDL_Surface* Surface)
@@ -58,6 +67,21 @@ class Text
         {
             SDL_FreeSurface(TextSurface);
         }
+    }
+
+   private:
+    void updateTextPosition()
+    {
+        auto [x, y, w, h] = DestinationRect;
+        // Horizontally centering
+        const int WidthDifference{w - TextSurface->w};
+        const int LeftOffset{WidthDifference / 2};
+
+        // Vertically centering
+        const int HeightDifference{h - TextSurface->h};
+        const int TopOffset{HeightDifference / 2};
+
+        TextPosition = {x + LeftOffset, y + TopOffset, w, h};
     }
 
    private:

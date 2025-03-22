@@ -1,17 +1,20 @@
 #pragma once
 #include <vector>
 
-#include "../Globals.h"
 #include "Cell.h"
+#include "Engine/Layout.h"
 #include "Engine/Random.h"
+#include "Globals.h"
 
-class MinesweeperGrid
+class MinesweeperGrid : public Engine::Layout::UIElement
 {
    public:
     MinesweeperGrid(int x, int y)
     {
         using namespace Config;
         Children.reserve(GRID_COLUMNS * GRID_ROWS);
+        SetWH(GRID_COLUMNS * CELL_SIZE + (GRID_COLUMNS - 1) * PADDING,
+              GRID_ROWS * CELL_SIZE + (GRID_ROWS - 1) * PADDING);
         for (int Col{1}; Col <= GRID_COLUMNS; ++Col)
         {
             for (int Row{1}; Row <= GRID_ROWS; ++Row)
