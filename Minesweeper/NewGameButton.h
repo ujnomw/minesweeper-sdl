@@ -30,7 +30,7 @@ class NewGameButton : public Engine::Button
     void SetRect(SDL_Rect i_rect) override
     {
         Button::SetRect(i_rect);
-        Text.SetDestinationRect(i_rect);
+        Text.SetRect(i_rect);
     }
 
     void Render(SDL_Surface* Surface) override

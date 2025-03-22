@@ -30,6 +30,7 @@ inline constexpr int PADDING{5};
 inline constexpr int CELL_SIZE{50};
 inline constexpr int FOOTER_HEIGHT{60};
 inline constexpr int FLAG_COUNTER_WIDTH{100};
+inline constexpr int FLAG_COUNTER_ICON_WIDTH{24};
 
 inline constexpr int GRID_HEIGHT{CELL_SIZE * GRID_ROWS + PADDING * (GRID_ROWS - 1)};
 

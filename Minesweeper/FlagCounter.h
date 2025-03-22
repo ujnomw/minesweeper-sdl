@@ -31,24 +31,19 @@ class FlagCounter : public Engine::Rectangle
 
     FlagCounter()
         : Image{Config::FOOTER_HEIGHT - Config::PADDING,
-                Config::FOOTER_HEIGHT - Config::PADDING, Config::FLAG_IMAGE, 24},
+                Config::FOOTER_HEIGHT - Config::PADDING, Config::FLAG_IMAGE,
+                Config::FLAG_COUNTER_ICON_WIDTH},
           Text{0,
                0,
-               Config::FLAG_COUNTER_WIDTH - Config::FOOTER_HEIGHT - 24,
+               Config::FLAG_COUNTER_WIDTH - Config::FOOTER_HEIGHT -
+                   Config::FLAG_COUNTER_ICON_WIDTH,
                Config::FOOTER_HEIGHT - Config::PADDING,
                std::to_string(Config::BOMB_COUNT),
                {255, 255, 255, 255},
                20}
     {
-        // Rectangle::Rectangle{0, 0, Config::FLAG_COUNTER_WIDTH,
-        //                      Config::FOOTER_HEIGHT - Config::PADDING,
-        //                      Config::FLAG_COUNTER_COLOR};
-        SetRect(
-            {0, 0, Config::FLAG_COUNTER_WIDTH, Config::FOOTER_HEIGHT - Config::PADDING});
+        SetWH(Config::FLAG_COUNTER_WIDTH, Config::FOOTER_HEIGHT - Config::PADDING);
         SetColor(Config::FLAG_COUNTER_COLOR);
-        // Image = Engine::Image{Config::FOOTER_HEIGHT - Config::PADDING,
-        //                       Config::FOOTER_HEIGHT - Config::PADDING,
-        //                       Config::FLAG_IMAGE, 24};
     }
 
     void SetRect(SDL_Rect i_rect) override
@@ -64,8 +59,6 @@ class FlagCounter : public Engine::Rectangle
         Text.Render(Surface);
         Image.Render(Surface);
     }
-
-    // void SetRect(SDL_Rect i_rect) override { Engine::Rectangle::SetRect(i_rect); };
 
     void HandleEvent(const SDL_Event& E)
     {
@@ -97,16 +90,11 @@ class FlagCounter : public Engine::Rectangle
     {
         std::cout << "Fitting started" << std::endl;
         auto [x, y, w, h] = GetRect();
-        Image.SetDestinationRect({
-            x,
-            y,
-            Config::FOOTER_HEIGHT - Config::PADDING,
-            Config::FOOTER_HEIGHT - Config::PADDING,
-        });
+        Image.SetXY(x, y);
 
         std::cout << "Fitting for image done" << std::endl;
-        Text.SetDestinationRect(
-            {x + Config::FOOTER_HEIGHT, y, w - Config::FOOTER_HEIGHT - 24, h});
+        Text.SetRect({x + Config::FOOTER_HEIGHT, y,
+                      w - Config::FOOTER_HEIGHT - Config::FLAG_COUNTER_ICON_WIDTH, h});
         std::cout << "Fitting ended" << std::endl;
     };
 

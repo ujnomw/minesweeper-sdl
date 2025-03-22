@@ -3,10 +3,11 @@
 #include <SDL_ttf.h>
 
 #include "Globals.h"
+#include "Layout.h"
 
 namespace Engine
 {
-class Text
+class Text : public Layout::UIElement
 {
    public:
     Text() {};
@@ -14,6 +15,7 @@ class Text
          SDL_Color Color = {0, 0, 0, 255}, int FontSize = 30)
         : DestinationRect{x, y, w, h}, Color{Color}
     {
+        SetRect({x, y, w, h});
         Font = TTF_OpenFont(Config::FONT.c_str(), FontSize);
 #ifdef SHOW_DEBUG_HELPERS
         Utils::CheckSDLError("TTF_OpenFont");
@@ -41,7 +43,13 @@ class Text
         updateTextPosition();
     }
 
-    void Render(SDL_Surface* Surface)
+    void SetRect(SDL_Rect i_rect) override
+    {
+        UIElement::SetRect(i_rect);
+        updateTextPosition();
+    }
+
+    void Render(SDL_Surface* Surface) override
     {
         SDL_BlitSurface(TextSurface, nullptr, Surface, &TextPosition);
     }
@@ -61,7 +69,11 @@ class Text
    private:
     void updateTextPosition()
     {
-        auto [x, y, w, h] = DestinationRect;
+        if (TextSurface == nullptr)
+        {
+            return;
+        }
+        auto [x, y, w, h] = GetRect();
         // Horizontally centering
         const int WidthDifference{w - TextSurface->w};
         const int LeftOffset{WidthDifference / 2};

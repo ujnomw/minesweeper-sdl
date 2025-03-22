@@ -3,15 +3,17 @@
 
 #include <string>
 
+#include "Layout.h"
 namespace Engine
 {
-class Image
+class Image : public Layout::UIElement
 {
    public:
     Image() {};
     Image(int w, int h, const std::string& i_filename, int i_padding = 12)
-        : Destination{0, 0, w - i_padding, h - i_padding}, d_padding{i_padding}
+        : d_padding{i_padding}
     {
+        SetWH(w, h);
         ImageSurface = IMG_Load(i_filename.c_str());
 #ifdef SHOW_DEBUG_HELPERS
         Utils::CheckSDLError("IMG_Load");
@@ -27,13 +29,21 @@ class Image
 #endif
     }
 
-    void Render(SDL_Surface* Surface)
+    void Render(SDL_Surface* Surface) override
     {
         SDL_BlitScaled(ImageSurface, nullptr, Surface, &Destination);
     }
 
     void SetDestinationRect(SDL_Rect i_rect)
     {
+        auto [x, y, w, h] = i_rect;
+        Destination = {x + d_padding / 2, y + d_padding / 2, w - d_padding,
+                       h - d_padding};
+    }
+
+    void SetRect(SDL_Rect i_rect) override
+    {
+        UIElement::SetRect(i_rect);
         auto [x, y, w, h] = i_rect;
         Destination = {x + d_padding / 2, y + d_padding / 2, w - d_padding,
                        h - d_padding};
