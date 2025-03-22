@@ -20,9 +20,10 @@ class Image : public Layout::UIElement
 #endif
     }
     Image(int x, int y, int w, int h, const std::string& Filename, int Padding = 12)
-        : Destination{x + Padding / 2, y + Padding / 2, w - Padding, h - Padding},
-          d_padding{Padding}
+        : d_padding{Padding}
     {
+        SetRect({x, y, w, h});
+        updateDestinationRect();
         ImageSurface = IMG_Load(Filename.c_str());
 #ifdef SHOW_DEBUG_HELPERS
         Utils::CheckSDLError("IMG_Load");
@@ -34,19 +35,10 @@ class Image : public Layout::UIElement
         SDL_BlitScaled(ImageSurface, nullptr, Surface, &Destination);
     }
 
-    void SetDestinationRect(SDL_Rect i_rect)
+    void ComputeLayout(int i_x, int i_y) override
     {
-        auto [x, y, w, h] = i_rect;
-        Destination = {x + d_padding / 2, y + d_padding / 2, w - d_padding,
-                       h - d_padding};
-    }
-
-    void SetRect(SDL_Rect i_rect) override
-    {
-        UIElement::SetRect(i_rect);
-        auto [x, y, w, h] = i_rect;
-        Destination = {x + d_padding / 2, y + d_padding / 2, w - d_padding,
-                       h - d_padding};
+        SetXY(i_x, i_y);
+        updateDestinationRect();
     }
 
     ~Image()
@@ -58,6 +50,14 @@ class Image : public Layout::UIElement
     }
 
     Image(const Image&) {}
+
+   private:
+    void updateDestinationRect()
+    {
+        auto [x, y, w, h] = GetRect();
+        Destination = {x + d_padding / 2, y + d_padding / 2, w - d_padding,
+                       h - d_padding};
+    }
 
    private:
     SDL_Surface* ImageSurface{nullptr};

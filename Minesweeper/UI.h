@@ -17,21 +17,8 @@ class MinesweeperUI
     Engine::Layout::Column Layout{Grid, Footer};
 
    public:
-    MinesweeperUI()
-    {
-        // Footer.SetRect(
-        //     {Config::PADDING, Config::GRID_HEIGHT + Config::PADDING * 2, 0, 0});
-
-        // Footer.SetXY(Config::PADDING, Config::GRID_HEIGHT + Config::PADDING * 2);
-        Layout.ComputeLayout(Config::PADDING, Config::PADDING);
-    };
-    void Render(SDL_Surface* Surface)
-    {
-        // Grid.Render(Surface);
-        // Button.Render(Surface);
-        // Counter.Render(Surface);
-        Layout.Render(Surface);
-    }
+    MinesweeperUI() { Layout.ComputeLayout(Config::PADDING, Config::PADDING); };
+    void Render(SDL_Surface* Surface) { Layout.Render(Surface); }
 
     void HandleEvent(const SDL_Event& E)
     {

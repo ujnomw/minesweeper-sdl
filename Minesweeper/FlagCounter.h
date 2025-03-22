@@ -10,25 +10,6 @@
 class FlagCounter : public Engine::Rectangle
 {
    public:
-    FlagCounter(int x, int y, int w, int h)
-        : Rectangle{x, y, w, h, Config::FLAG_COUNTER_COLOR},
-          Image{x,
-                y,
-                Config::FOOTER_HEIGHT - Config::PADDING,
-                Config::FOOTER_HEIGHT - Config::PADDING,
-                Config::FLAG_IMAGE,
-                24},
-          Text{x + Config::FOOTER_HEIGHT,
-               y,
-               w - Config::FOOTER_HEIGHT - 24,
-               h,
-               std::to_string(Config::BOMB_COUNT),
-               {255, 255, 255, 255},
-               20}
-    {
-        fitContentInRect();
-    }
-
     FlagCounter()
         : Image{Config::FOOTER_HEIGHT - Config::PADDING,
                 Config::FOOTER_HEIGHT - Config::PADDING, Config::FLAG_IMAGE,
@@ -50,14 +31,13 @@ class FlagCounter : public Engine::Rectangle
     {
         Rectangle::SetRect(i_rect);
         std::cout << "counter set rect" << std::endl;
-        fitContentInRect();
+        Content.SetRect(i_rect);
     }
 
     void Render(SDL_Surface* Surface) override
     {
         Rectangle::Render(Surface);
-        Text.Render(Surface);
-        Image.Render(Surface);
+        Content.Render(Surface);
     }
 
     void HandleEvent(const SDL_Event& E)
@@ -85,21 +65,15 @@ class FlagCounter : public Engine::Rectangle
         Text.SetText(std::to_string(FlagsAvailable));
     }
 
-   private:
-    void fitContentInRect()
+    void ComputeLayout(int i_x, int i_y) override
     {
-        std::cout << "Fitting started" << std::endl;
-        auto [x, y, w, h] = GetRect();
-        Image.SetXY(x, y);
-
-        std::cout << "Fitting for image done" << std::endl;
-        Text.SetRect({x + Config::FOOTER_HEIGHT, y,
-                      w - Config::FOOTER_HEIGHT - Config::FLAG_COUNTER_ICON_WIDTH, h});
-        std::cout << "Fitting ended" << std::endl;
-    };
+        UIElement::ComputeLayout(i_x, i_y);
+        Content.ComputeLayout(i_x, i_y);
+    }
 
    private:
     Engine::Image Image;
     Engine::Text Text;
+    Engine::Layout::Row Content{Image, Text};
     int FlagsAvailable{Config::BOMB_COUNT};
 };

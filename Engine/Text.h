@@ -13,7 +13,7 @@ class Text : public Layout::UIElement
     Text() {};
     Text(int x, int y, int w, int h, const std::string& Content,
          SDL_Color Color = {0, 0, 0, 255}, int FontSize = 30)
-        : DestinationRect{x, y, w, h}, Color{Color}
+        : Color{Color}
     {
         SetRect({x, y, w, h});
         Font = TTF_OpenFont(Config::FONT.c_str(), FontSize);
@@ -37,21 +37,15 @@ class Text : public Layout::UIElement
         updateTextPosition();
     }
 
-    void SetDestinationRect(SDL_Rect i_rect)
-    {
-        DestinationRect = i_rect;
-        updateTextPosition();
-    }
-
-    void SetRect(SDL_Rect i_rect) override
-    {
-        UIElement::SetRect(i_rect);
-        updateTextPosition();
-    }
-
     void Render(SDL_Surface* Surface) override
     {
         SDL_BlitSurface(TextSurface, nullptr, Surface, &TextPosition);
+    }
+
+    void ComputeLayout(int i_x, int i_y) override
+    {
+        SetXY(i_x, i_y);
+        updateTextPosition();
     }
 
     ~Text()
@@ -88,7 +82,6 @@ class Text : public Layout::UIElement
    private:
     SDL_Surface* TextSurface{nullptr};
     TTF_Font* Font{nullptr};
-    SDL_Rect DestinationRect{0, 0, 0, 0};
     SDL_Rect TextPosition{0, 0, 0, 0};
     SDL_Color Color{0, 0, 0, 255};
 };

@@ -33,6 +33,12 @@ class NewGameButton : public Engine::Button
         Text.SetRect(i_rect);
     }
 
+    void ComputeLayout(int i_x, int i_y) override
+    {
+        UIElement::ComputeLayout(i_x, i_y);
+        Text.ComputeLayout(i_x, i_y);
+    }
+
     void Render(SDL_Surface* Surface) override
     {
         Button::Render(Surface);

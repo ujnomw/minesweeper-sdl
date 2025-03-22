@@ -67,6 +67,8 @@ class UIElement : public IBox
                '_' + std::to_string(h);
     }
 
+    // Should never be called by SetRect or aliases functions, this method should call
+    // them
     virtual void ComputeLayout(int x, int y)
     {
         SetXY(x, y);
@@ -81,18 +83,13 @@ class Row : public UIElement
 {
    private:
     std::vector<UIElement*> d_children;
-    // std::vector<std::shared_ptr<IBox>> d_children;
     int d_gap{Config::PADDING};
 
    public:
-    // template <typename... T, typename = std::enable_if_t<
-    //                              (std::is_base_of_v<IBox, std::decay_t<T>> && ...)>>
-    // template <std::derived_from<IBox>... T>
     template <typename... T>
     Row(T&&... args)
     {
         (d_children.push_back(&args), ...);
-        // setBoxesLocation();
     };
 
     void Render(SDL_Surface* i_surface) override
@@ -105,8 +102,6 @@ class Row : public UIElement
         SetXY(i_x, i_y);
         std::cout << "Inside Row rect " << toString() << std::endl;
         if (d_children.empty()) return;
-
-        // rendering point of the next box
         auto [X, Y] = GetXY();
         int W = 0;
         int H = 0;
@@ -158,8 +153,6 @@ class Column : public UIElement
         SetXY(i_x, i_y);
         std::cout << "Inside Column rect " << toString() << std::endl;
         if (d_children.empty()) return;
-
-        // rendering point of the next box
         auto [X, Y] = GetXY();
         int W = 0;
         int H = 0;
