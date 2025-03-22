@@ -23,11 +23,11 @@ class MinesweeperUI
         //     {Config::PADDING, Config::GRID_HEIGHT + Config::PADDING * 2, 0, 0});
 
         // Footer.SetXY(Config::PADDING, Config::GRID_HEIGHT + Config::PADDING * 2);
-        Layout.setBoxesLocation(Config::PADDING, Config::PADDING);
+        Layout.ComputeLayout(Config::PADDING, Config::PADDING);
     };
     void Render(SDL_Surface* Surface)
     {
-        Grid.Render(Surface);
+        // Grid.Render(Surface);
         // Button.Render(Surface);
         // Counter.Render(Surface);
         Layout.Render(Surface);

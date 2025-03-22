@@ -32,17 +32,6 @@ class Text
         Color = NewColor;
 
         TextSurface = TTF_RenderUTF8_Blended(Font, Text.c_str(), Color);
-
-        // auto [x, y, w, h] = DestinationRect;
-        // // Horizontally centering
-        // const int WidthDifference{w - TextSurface->w};
-        // const int LeftOffset{WidthDifference / 2};
-
-        // // Vertically centering
-        // const int HeightDifference{h - TextSurface->h};
-        // const int TopOffset{HeightDifference / 2};
-
-        // TextPosition = {x + LeftOffset, y + TopOffset, w, h};
         updateTextPosition();
     }
 

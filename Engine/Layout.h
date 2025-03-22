@@ -67,7 +67,7 @@ class UIElement : public IBox
                '_' + std::to_string(h);
     }
 
-    virtual void setBoxesLocation(int x, int y)
+    virtual void ComputeLayout(int x, int y)
     {
         SetXY(x, y);
         std::cout << "Base rect " << toString() << std::endl;
@@ -100,7 +100,7 @@ class Row : public UIElement
         for (auto c : d_children) c->Render(i_surface);
     };
 
-    void setBoxesLocation(int i_x, int i_y) override
+    void ComputeLayout(int i_x, int i_y) override
     {
         SetXY(i_x, i_y);
         std::cout << "Inside Row rect " << toString() << std::endl;
@@ -113,7 +113,7 @@ class Row : public UIElement
 
         for (auto c : d_children)
         {
-            c->setBoxesLocation(X, Y);
+            c->ComputeLayout(X, Y);
             auto [_x, _y, w, h] = c->GetRect();
             std::cout << "child rect " << c->toString() << std::endl;
             if (w < 1 || h < 1)
@@ -153,7 +153,7 @@ class Column : public UIElement
         for (auto c : d_children) c->Render(i_surface);
     };
 
-    void setBoxesLocation(int i_x, int i_y) override
+    void ComputeLayout(int i_x, int i_y) override
     {
         SetXY(i_x, i_y);
         std::cout << "Inside Column rect " << toString() << std::endl;
@@ -166,7 +166,7 @@ class Column : public UIElement
 
         for (auto c : d_children)
         {
-            c->setBoxesLocation(X, Y);
+            c->ComputeLayout(X, Y);
             auto [_x, _y, w, h] = c->GetRect();
             std::cout << "child rect " << c->toString() << std::endl;
             if (w < 1 || h < 1)
