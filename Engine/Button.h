@@ -1,5 +1,5 @@
 #pragma once
-#include "../Globals.h"
+#include "Globals.h"
 #include "Rectangle.h"
 
 namespace Engine
@@ -8,6 +8,7 @@ namespace Engine
 class Button : public Rectangle
 {
    public:
+    Button() {}
     Button(int x, int y, int w, int h) : Rectangle{x, y, w, h, Config::BUTTON_COLOR} {}
 
     void virtual HandleEvent(const SDL_Event &E)

@@ -12,6 +12,33 @@ class NewGameButton : public Engine::Button
     {
     }
 
+    NewGameButton()
+        : Text{0,
+               0,
+               Config::WINDOW_WIDTH - Config::PADDING * 3 - Config::FLAG_COUNTER_WIDTH,
+               Config::FOOTER_HEIGHT - Config::PADDING,
+               "NEW GAME",
+               {50, 50, 50},
+               20}
+    {
+        SetRect({0, 0,
+                 Config::WINDOW_WIDTH - Config::PADDING * 3 - Config::FLAG_COUNTER_WIDTH,
+                 Config::FOOTER_HEIGHT - Config::PADDING});
+        SetColor(Config::BUTTON_COLOR);
+    }
+
+    void SetRect(SDL_Rect i_rect) override
+    {
+        Button::SetRect(i_rect);
+        Text.SetRect(i_rect);
+    }
+
+    void ComputeLayout(int i_x, int i_y) override
+    {
+        UIElement::ComputeLayout(i_x, i_y);
+        Text.ComputeLayout(i_x, i_y);
+    }
+
     void Render(SDL_Surface* Surface) override
     {
         Button::Render(Surface);
