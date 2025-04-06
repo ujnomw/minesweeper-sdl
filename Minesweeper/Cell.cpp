@@ -1,11 +1,15 @@
 #include "Minesweeper/Cell.h"
 
+#include <SDL.h>
+
 #include <iostream>
 
 #include "Globals.h"
 
-MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col)
+MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col,
+                                 MinesweeperAtlas& i_atlas)
     : Button{x, y, w, h},
+      d_atlas{i_atlas},
       Row{Row},
       Col{Col},
       BombImage{x, y, w, h, Config::BOMB_PATH},
@@ -87,6 +91,8 @@ void MinesweeperCell::Render(SDL_Surface* Surface)
     }
     else if (isCleared && AdjacentBombs > 0)
     {
+        // SDL_BlitSurface(d_atlas.GetAtlasSurface(),
+        // &d_atlas.NumberRects[AdjacentBombs - 1], Surface, &GetRect());
         Text.Render(Surface);
     }
 
@@ -112,7 +118,9 @@ void MinesweeperCell::handleBombPlaced(const SDL_UserEvent& E)
     if (isAdjustend(cell))
     {
         ++AdjacentBombs;
-        Text.SetText(std::to_string(AdjacentBombs), Config::TEXT_COLORS[AdjacentBombs]);
+        if (AdjacentBombs > 0)
+            Text.SetText(std::to_string(AdjacentBombs),
+                         Config::TEXT_COLORS[AdjacentBombs]);
     }
 }
 

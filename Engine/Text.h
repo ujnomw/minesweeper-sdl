@@ -48,6 +48,8 @@ class Text : public Layout::UIElement
         updateTextPosition();
     }
 
+    SDL_Surface* GetTextSurface() { return TextSurface; }
+
     ~Text()
     {
         if (Font)
