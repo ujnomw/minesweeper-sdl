@@ -25,7 +25,7 @@ class MinesweeperGrid : public Engine::Layout::UIElement
                                       Row, Col);
             }
         }
-        PlaceBombs();
+        // PlaceBombs();
     }
 
     void Render(SDL_Surface* Surface)
@@ -48,7 +48,8 @@ class MinesweeperGrid : public Engine::Layout::UIElement
             {
                 Child.Reset();
             }
-            PlaceBombs();
+            areBombsPlaced = false;
+            // PlaceBombs();
         }
         for (auto& Child : Children)
         {
@@ -57,22 +58,31 @@ class MinesweeperGrid : public Engine::Layout::UIElement
     }
 
    private:
-    void PlaceBombs()
+    void PlaceBombs(MinesweeperCell* i_clickedCell)
     {
         int bombsToPlace{Config::BOMB_COUNT};
         cellsToClear = Config::GRID_ROWS * Config::GRID_COLUMNS - Config::BOMB_COUNT;
         while (bombsToPlace > 0)
         {
             const size_t bombIndex = Engine::Random::Int(0, Children.size() - 1);
-            if (Children[bombIndex].PlaceBomb())
+            const bool isSameCellOrAround =
+                i_clickedCell->isAdjustend(&Children[bombIndex]) ||
+                i_clickedCell == &Children[bombIndex];
+            if (!isSameCellOrAround && Children[bombIndex].PlaceBomb())
             {
                 --bombsToPlace;
             }
         }
+        areBombsPlaced = true;
     }
     void handleCellCleared(const SDL_UserEvent& E)
     {
         auto* cell{static_cast<MinesweeperCell*>(E.data1)};
+
+        if (!areBombsPlaced)
+        {
+            PlaceBombs(cell);
+        };
 
         if (cell->GetHasBomb())
         {
@@ -92,4 +102,5 @@ class MinesweeperGrid : public Engine::Layout::UIElement
 
     std::vector<MinesweeperCell> Children;
     int cellsToClear;
+    bool areBombsPlaced{false};
 };
