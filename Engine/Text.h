@@ -41,6 +41,10 @@ class Text : public Layout::UIElement
     {
         SDL_BlitSurface(TextSurface, nullptr, Surface, &TextPosition);
     }
+    void Render(SDL_Surface* Surface, SDL_Rect* i_srcrect)
+    {
+        SDL_BlitSurface(TextSurface, i_srcrect, Surface, &TextPosition);
+    }
 
     void ComputeLayout(int i_x, int i_y) override
     {

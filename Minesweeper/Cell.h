@@ -50,8 +50,5 @@ class MinesweeperCell : public Engine::Button
     bool hasFlag{false};
     int Row;
     int Col;
-    Engine::Image BombImage;
-    Engine::Image FlagImage;
-    Engine::Text Text;
     MinesweeperAtlas& d_atlas;
 };

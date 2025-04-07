@@ -35,7 +35,7 @@ class MinesweeperGrid : public Engine::Layout::UIElement
         {
             Child.Render(Surface);
         }
-        SDL_Rect dest{0, 0, 250, 100};
+        // SDL_Rect dest{0, 0, 250, 100};
         // SDL_BlitSurface(d_atlas.GetAtlasSurface(), &dest, Surface, &dest);
     }
 
