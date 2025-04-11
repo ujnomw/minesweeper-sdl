@@ -11,7 +11,7 @@ class Window
    public:
     Window()
     {
-        SDLWindow = SDL_CreateWindow("My Program", SDL_WINDOWPOS_UNDEFINED,
+        SDLWindow = SDL_CreateWindow(Config::GAME_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED,
                                      SDL_WINDOWPOS_UNDEFINED, Config::WINDOW_WIDTH,
                                      Config::WINDOW_HEIGHT, 0);
     }
