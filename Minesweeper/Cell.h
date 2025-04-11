@@ -2,6 +2,7 @@
 #include "Engine/Button.h"
 #include "Engine/Image.h"
 #include "Engine/Text.h"
+#include "Minesweeper/MinesweeperAtlas.h"
 
 class MinesweeperCell : public Engine::Button
 {
@@ -9,7 +10,8 @@ class MinesweeperCell : public Engine::Button
     int AdjacentBombs{0};
 
    public:
-    MinesweeperCell(int X, int Y, int W, int H, int Row, int Col);
+    MinesweeperCell(int X, int Y, int W, int H, int Row, int Col,
+                    MinesweeperAtlas& i_atlas);
 
     void HandleEvent(const SDL_Event& E) override;
     void Render(SDL_Surface* Surface) override;
@@ -48,7 +50,5 @@ class MinesweeperCell : public Engine::Button
     bool hasFlag{false};
     int Row;
     int Col;
-    Engine::Image BombImage;
-    Engine::Image FlagImage;
-    Engine::Text Text;
+    MinesweeperAtlas& d_atlas;
 };
