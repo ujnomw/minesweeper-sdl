@@ -4,6 +4,23 @@ set(CMAKE_CXX_STANDARD 23)
 
 project(Sandbox VERSION 1.0.0)
 
+set(SDL2_DIR /opt/homebrew/opt/sdl2)
+set(SDL2_IMAGE_DIR /opt/homebrew/opt/sdl2_image)
+set(SDL2_TTF_DIR /opt/homebrew/opt/sdl2_ttf)
+
+include_directories(
+  Sandbox PRIVATE
+  ${CMAKE_SOURCE_DIR}
+  ${SDL2_DIR}/include/SDL2
+  ${SDL2_IMAGE_DIR}/include/SDL2
+  ${SDL2_TTF_DIR}/include/SDL2
+)
+
+link_directories(
+    ${SDL2_DIR}/lib
+    ${SDL2_IMAGE_DIR}/lib
+    ${SDL2_TTF_DIR}/lib
+)
 
 add_executable(Sandbox
               main.cpp
@@ -14,37 +31,18 @@ add_executable(Sandbox
               "Engine/Text.h"
               "Engine/Window.h"
               "Engine/Random.h"
+              
               "Minesweeper/UI.h"
-
               "Minesweeper/Grid.h"
               "Minesweeper/UI.h"
               "Minesweeper/Cell.h"
               "Minesweeper/Cell.cpp"
-              # "Minesweeper/NewGameButton.h"
+              "Minesweeper/NewGameButton.h"
               )
 
-# Variables storing SDL framework locations
-set(SDL2
-  /Library/Frameworks/SDL2.framework)
-set(SDL2_image
-  /Library/Frameworks/SDL2_image.framework)
-set(SDL2_ttf
-  /Library/Frameworks/SDL2_ttf.framework)
 
-target_link_libraries(
-  Sandbox PRIVATE
-  -framework ${SDL2}/Versions/A/SDL2
-  -framework ${SDL2_image}/Versions/A/SDL2_image
-  -framework ${SDL2_ttf}/Versions/A/SDL2_ttf
-)
-
-target_include_directories(
-  Sandbox PRIVATE
-  ${CMAKE_SOURCE_DIR}
-  ${SDL2}/Versions/A/Headers
-  ${SDL2_image}/Versions/A/Headers
-  ${SDL2_ttf}/Versions/A/Headers
-)
-
-# Add the frameworks to the search path
-target_link_options(Sandbox PRIVATE "-F/Library/Frameworks")
+target_link_libraries(Sandbox
+  SDL2
+  SDL2_image
+  SDL2_ttf
+  )
