@@ -1,18 +1,14 @@
 #include "Minesweeper/Cell.h"
 
+#include <SDL.h>
+
 #include <iostream>
 
 #include "Globals.h"
 
-MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col)
-    : Button{x, y, w, h},
-      Row{Row},
-      Col{Col},
-      BombImage{x, y, w, h, Config::BOMB_PATH},
-      FlagImage{x, y, w, h, Config::FLAG_IMAGE},
-      Text{
-          x, y, w, h, std::to_string(AdjacentBombs), Config::TEXT_COLORS[AdjacentBombs]} {
-      };
+MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col,
+                                 MinesweeperAtlas& i_atlas)
+    : Button{x, y, w, h}, d_atlas{i_atlas}, Row{Row}, Col{Col} {};
 
 void MinesweeperCell::HandleEvent(const SDL_Event& E)
 {
@@ -79,21 +75,25 @@ void MinesweeperCell::Render(SDL_Surface* Surface)
     Button::Render(Surface);
     if (hasFlag)
     {
-        FlagImage.Render(Surface);
+        SDL_BlitSurface(d_atlas.GetAtlasSurface(), &d_atlas.BombRect, Surface,
+                        &GetRect());
     }
     else if (isCleared && hasBomb)
     {
-        BombImage.Render(Surface);
+        SDL_BlitSurface(d_atlas.GetAtlasSurface(), &d_atlas.BombRect, Surface,
+                        &GetRect());
     }
     else if (isCleared && AdjacentBombs > 0)
     {
-        Text.Render(Surface);
+        SDL_BlitSurface(d_atlas.GetAtlasSurface(),
+                        &d_atlas.NumberRects[AdjacentBombs - 1], Surface, &GetRect());
     }
 
 #ifdef SHOW_DEBUG_HELPERS
     else if (hasBomb)
     {
-        BombImage.Render(Surface);
+        SDL_BlitSurface(d_atlas.GetAtlasSurface(), &d_atlas.BombRect, Surface,
+                        &GetRect());
     }
 #endif
 }
@@ -112,7 +112,6 @@ void MinesweeperCell::handleBombPlaced(const SDL_UserEvent& E)
     if (isAdjustend(cell))
     {
         ++AdjacentBombs;
-        Text.SetText(std::to_string(AdjacentBombs), Config::TEXT_COLORS[AdjacentBombs]);
     }
 }
 

@@ -5,6 +5,7 @@
 #include "Engine/Layout.h"
 #include "Engine/Random.h"
 #include "Globals.h"
+#include "Minesweeper/MinesweeperAtlas.h"
 
 class MinesweeperGrid : public Engine::Layout::UIElement
 {
@@ -22,10 +23,9 @@ class MinesweeperGrid : public Engine::Layout::UIElement
                 constexpr int Spacing{CELL_SIZE + PADDING};
                 Children.emplace_back(x + (Spacing) * (Col - 1),
                                       y + (Spacing) * (Row - 1), CELL_SIZE, CELL_SIZE,
-                                      Row, Col);
+                                      Row, Col, d_atlas);
             }
         }
-        // PlaceBombs();
     }
 
     void Render(SDL_Surface* Surface)
@@ -103,4 +103,5 @@ class MinesweeperGrid : public Engine::Layout::UIElement
     std::vector<MinesweeperCell> Children;
     int cellsToClear;
     bool areBombsPlaced{false};
+    MinesweeperAtlas d_atlas;
 };
