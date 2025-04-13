@@ -6,6 +6,7 @@
 #include "Engine/Rectangle.h"
 #include "Engine/Text.h"
 #include "Globals.h"
+#include "Minesweeper/GameSettings.h"
 
 class FlagCounter : public Engine::Rectangle
 {
@@ -19,7 +20,7 @@ class FlagCounter : public Engine::Rectangle
                Config::FLAG_COUNTER_WIDTH - Config::FOOTER_HEIGHT -
                    Config::FLAG_COUNTER_ICON_WIDTH,
                Config::FOOTER_HEIGHT - Config::PADDING,
-               std::to_string(Config::BOMB_COUNT),
+               std::to_string(GameSettings::BombCount()),
                {255, 255, 255, 255},
                20}
     {
@@ -56,7 +57,7 @@ class FlagCounter : public Engine::Rectangle
         }
         else if (E.type == UserEvents::NEW_GAME)
         {
-            FlagsAvailable = Config::BOMB_COUNT;
+            FlagsAvailable = GameSettings::BombCount();
         }
         else
         {
@@ -75,5 +76,5 @@ class FlagCounter : public Engine::Rectangle
     Engine::Image Image;
     Engine::Text Text;
     Engine::Layout::Row Content{Image, Text};
-    int FlagsAvailable{Config::BOMB_COUNT};
+    int FlagsAvailable{GameSettings::BombCount()};
 };

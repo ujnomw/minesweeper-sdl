@@ -10,10 +10,10 @@ set(SDL2_TTF_DIR /opt/homebrew/opt/sdl2_ttf)
 
 include_directories(
   Sandbox PRIVATE
-  ${CMAKE_SOURCE_DIR}
   ${SDL2_DIR}/include/SDL2
   ${SDL2_IMAGE_DIR}/include/SDL2
   ${SDL2_TTF_DIR}/include/SDL2
+  ${CMAKE_SOURCE_DIR}
 )
 
 link_directories(
@@ -31,6 +31,7 @@ add_executable(Sandbox
               "Engine/Text.h"
               "Engine/Window.h"
               "Engine/Random.h"
+              "Engine/Layout.h"
               
               "Minesweeper/UI.h"
               "Minesweeper/Grid.h"
@@ -38,6 +39,8 @@ add_executable(Sandbox
               "Minesweeper/Cell.h"
               "Minesweeper/Cell.cpp"
               "Minesweeper/NewGameButton.h"
+              "Minesweeper/GameSettings.cpp"
+              "Minesweeper/FlagCounter.h"
               )
 
 

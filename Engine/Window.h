@@ -2,6 +2,7 @@
 #include <SDL.h>
 
 #include "../Globals.h"
+#include "Minesweeper/GameSettings.h"
 
 namespace Engine
 {
@@ -12,8 +13,8 @@ class Window
     Window()
     {
         SDLWindow = SDL_CreateWindow(Config::GAME_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED,
-                                     SDL_WINDOWPOS_UNDEFINED, Config::WINDOW_WIDTH,
-                                     Config::WINDOW_HEIGHT, 0);
+                                     SDL_WINDOWPOS_UNDEFINED, GameSettings::WindowWidth(),
+                                     GameSettings::WindowsHeight(), 0);
     }
 
     void Render()
@@ -26,6 +27,8 @@ class Window
     void Update() { SDL_UpdateWindowSurface(SDLWindow); }
 
     SDL_Surface *GetSurface() { return SDL_GetWindowSurface(SDLWindow); }
+
+    void SetWH(int w, int h) { SDL_SetWindowSize(SDLWindow, w, h); }
 
     ~Window() { SDL_DestroyWindow(SDLWindow); }
 

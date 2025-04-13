@@ -75,7 +75,7 @@ void MinesweeperCell::Render(SDL_Surface* Surface)
     Button::Render(Surface);
     if (hasFlag)
     {
-        SDL_BlitSurface(d_atlas.GetAtlasSurface(), &d_atlas.BombRect, Surface,
+        SDL_BlitSurface(d_atlas.GetAtlasSurface(), &d_atlas.FlagRect, Surface,
                         &GetRect());
     }
     else if (isCleared && hasBomb)

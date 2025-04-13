@@ -28,11 +28,7 @@ class UIElement : public IBox
 {
    public:
     UIElement() {};
-    void SetRect(SDL_Rect i_rect) override
-    {
-        d_rect = i_rect;
-        // setBoxesLocation();
-    };
+    void SetRect(SDL_Rect i_rect) override { d_rect = i_rect; };
 
     SDL_Rect& GetRect() override { return d_rect; }
 
@@ -86,6 +82,7 @@ class Row : public UIElement
     int d_gap{Config::PADDING};
 
    public:
+    // TODO: Move args
     template <typename... T>
     Row(T&&... args)
     {
@@ -137,6 +134,7 @@ class Column : public UIElement
     int d_gap{Config::PADDING};
 
    public:
+    // TODO: Move args
     template <typename... T>
     Column(T&&... args)
     {

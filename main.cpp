@@ -5,6 +5,7 @@
 
 #include "Engine/Window.h"
 #include "Globals.h"
+#include "Minesweeper/GameSettings.h"
 #include "Minesweeper/UI.h"
 
 int main(int argc, char** argv)
@@ -23,7 +24,7 @@ int main(int argc, char** argv)
 #ifdef SHOW_DEBUG_HELPERS
     Utils::CheckSDLError("TTF_Init");
 #endif
-
+    GameSettings::SetMode(DifficultyMode::Easy);
     Engine::Window GameWindow;
     MinesweeperUI UI;
 

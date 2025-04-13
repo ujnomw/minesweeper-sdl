@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 
 #include "Engine/Layout.h"
 #include "Globals.h"
@@ -14,11 +15,19 @@ class MinesweeperUI
     NewGameButton Button;
     FlagCounter Counter;
     Engine::Layout::Row Footer{Button, Counter};
-    Engine::Layout::Column Layout{Grid, Footer};
+    std::unique_ptr<Engine::Layout::UIElement> Footer_{nullptr};
+    std::unique_ptr<Engine::Layout::Column> Layout{nullptr};
 
    public:
-    MinesweeperUI() { Layout.ComputeLayout(Config::PADDING, Config::PADDING); };
-    void Render(SDL_Surface* Surface) { Layout.Render(Surface); }
+    // TODO: Make simple, once assignment and move constructors are done for layout
+    // classes
+    MinesweeperUI()
+    {
+        Footer_ = std::make_unique<Engine::Layout::Row>(Counter, Button);
+        Layout = std::make_unique<Engine::Layout::Column>(Grid, *Footer_.get());
+        Layout->ComputeLayout(Config::PADDING, Config::PADDING);
+    };
+    void Render(SDL_Surface* Surface) { Layout->Render(Surface); }
 
     void HandleEvent(const SDL_Event& E)
     {
