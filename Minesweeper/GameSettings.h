@@ -1,19 +1,21 @@
 #pragma once
 
 #include <iostream>
-#include <optional>
+#include <string>
 
 enum DifficultyMode
 {
     Easy,
     Medium,
-    Hard
+    Hard,
+    None
 };
 
 struct GameSettings
 {
    private:
     static DifficultyMode d_mode;
+    static DifficultyMode d_nextMode;
     static int d_bombCount;
     static int d_gridColumns;
     static int d_gridRows;
@@ -25,7 +27,8 @@ struct GameSettings
    public:
     GameSettings()
     {
-        d_mode = DifficultyMode::Easy;
+        d_mode = DifficultyMode::None;
+        d_nextMode = DifficultyMode::Medium;
         d_bombCount = 6;
         d_gridRows = 4;
         d_gridColumns = 8;
@@ -33,7 +36,8 @@ struct GameSettings
     };
 
     static DifficultyMode GetMode();
-    static void SetMode(DifficultyMode i_mode);
+    static const std::string GetNextMode();
+    static void SetNextMode(DifficultyMode i_mode);
     static int BombCount();
     static int GridColumns();
     static int GridRows();
@@ -41,7 +45,10 @@ struct GameSettings
     static int GridWidth();
     static int WindowsHeight();
     static int WindowWidth();
+    static void UpdateSettings();
+    static void SwitchNextMode();
 
    private:
     static void updateGridAndWindow();
+    static const std::string modeToText(DifficultyMode i_mode);
 };

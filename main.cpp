@@ -24,7 +24,8 @@ int main(int argc, char** argv)
 #ifdef SHOW_DEBUG_HELPERS
     Utils::CheckSDLError("TTF_Init");
 #endif
-    GameSettings::SetMode(DifficultyMode::Easy);
+    GameSettings::SetNextMode(DifficultyMode::Hard);
+    GameSettings::UpdateSettings();
     Engine::Window GameWindow;
     MinesweeperUI UI;
 

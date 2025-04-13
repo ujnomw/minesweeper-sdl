@@ -15,7 +15,7 @@ class NewGameButton : public Engine::Button
     NewGameButton()
         : Text{0,
                0,
-               Config::WINDOW_WIDTH - Config::PADDING * 3 - Config::FLAG_COUNTER_WIDTH,
+               Config::NEW_GAME_BUTTON_WIDTH,
                Config::FOOTER_HEIGHT - Config::PADDING,
                "NEW GAME",
                {50, 50, 50},

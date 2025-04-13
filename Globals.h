@@ -32,6 +32,9 @@ inline constexpr int FOOTER_HEIGHT{60};
 inline constexpr int FLAG_COUNTER_WIDTH{100};
 inline constexpr int FLAG_COUNTER_ICON_WIDTH{24};
 
+inline constexpr int NEW_GAME_BUTTON_WIDTH{330};
+inline constexpr int DIFFICULTY_LABEL_WIDTH{330};
+
 inline constexpr int GRID_HEIGHT{CELL_SIZE * GRID_ROWS + PADDING * (GRID_ROWS - 1)};
 
 inline constexpr int GRID_WIDTH{CELL_SIZE * GRID_COLUMNS + PADDING * (GRID_COLUMNS - 1)};
