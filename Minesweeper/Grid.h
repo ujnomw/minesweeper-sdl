@@ -11,7 +11,7 @@
 class MinesweeperGrid : public Engine::Layout::UIElement
 {
    public:
-    MinesweeperGrid(int x, int y) { ComputeLayout(x, y); }
+    MinesweeperGrid(int x, int y) { SetXY(x, y); }
 
     void ComputeLayout(int x, int y) override
     {
@@ -58,7 +58,7 @@ class MinesweeperGrid : public Engine::Layout::UIElement
                 Child.Reset();
             }
             areBombsPlaced = false;
-            // PlaceBombs();
+            return;
         }
         for (auto& Child : Children)
         {

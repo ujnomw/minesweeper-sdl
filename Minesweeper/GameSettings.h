@@ -47,6 +47,7 @@ struct GameSettings
     static int WindowWidth();
     static void UpdateSettings();
     static void SwitchNextMode();
+    static bool IsModeChanged();
 
    private:
     static void updateGridAndWindow();

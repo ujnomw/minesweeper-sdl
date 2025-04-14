@@ -1,6 +1,6 @@
 #pragma once
 
-// #define SHOW_DEBUG_HELPERS
+#define SHOW_DEBUG_HELPERS
 // #define FRAME_PERF_DEBUG
 
 #include <SDL.h>
@@ -76,6 +76,7 @@ inline Uint32 GAME_LOST = SDL_RegisterEvents(1);
 inline Uint32 NEW_GAME = SDL_RegisterEvents(1);
 inline Uint32 FLAG_PLACED = SDL_RegisterEvents(1);
 inline Uint32 FLAG_CLEARED = SDL_RegisterEvents(1);
+inline Uint32 DIFFICULTY_CHANGED = SDL_RegisterEvents(1);
 }  // namespace UserEvents
 
 namespace Utils

@@ -3,6 +3,7 @@
 #include "Engine/Button.h"
 #include "Engine/Text.h"
 #include "Globals.h"
+#include "Minesweeper/GameSettings.h"
 
 class NewGameButton : public Engine::Button
 {
@@ -47,6 +48,12 @@ class NewGameButton : public Engine::Button
 
     void HandleLeftClick() override
     {
+        GameSettings::SwitchNextMode();
+        if (GameSettings::IsModeChanged())
+        {
+            SDL_Event E{UserEvents::DIFFICULTY_CHANGED};
+            SDL_PushEvent(&E);
+        }
         SDL_Event E{UserEvents::NEW_GAME};
         SDL_PushEvent(&E);
     }

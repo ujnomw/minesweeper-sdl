@@ -31,6 +31,8 @@ int GameSettings::WindowWidth() { return d_windowWidth; };
 
 void GameSettings::SetNextMode(DifficultyMode i_mode) { d_nextMode = i_mode; };
 
+bool GameSettings::IsModeChanged() { return d_mode != d_nextMode; };
+
 void GameSettings::SwitchNextMode()
 {
     switch (d_nextMode)

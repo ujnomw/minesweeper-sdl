@@ -30,6 +30,15 @@ class Window
 
     void SetWH(int w, int h) { SDL_SetWindowSize(SDLWindow, w, h); }
 
+    void HandelEvents(const SDL_Event &i_event)
+    {
+        if (i_event.type == UserEvents::DIFFICULTY_CHANGED)
+        {
+            GameSettings::UpdateSettings();
+            SetWH(GameSettings::WindowWidth(), GameSettings::WindowsHeight());
+        }
+    }
+
     ~Window() { SDL_DestroyWindow(SDLWindow); }
 
     Window(const Window &) = delete;

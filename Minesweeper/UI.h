@@ -24,7 +24,10 @@ class MinesweeperUI
    public:
     // TODO: Make simple, once assignment and move constructors are done for layout
     // classes
-    MinesweeperUI()
+    MinesweeperUI() { ComputeLayout(Config::PADDING, Config::PADDING); };
+    void Render(SDL_Surface* Surface) { Layout->Render(Surface); }
+
+    void ComputeLayout(int i_x, int i_y)
     {
         if (GameSettings::GetMode() == Hard)
         {
@@ -37,12 +40,16 @@ class MinesweeperUI
             Layout =
                 std::make_unique<Engine::Layout::Column>(Grid, *Footer_.get(), Label);
         }
-        Layout->ComputeLayout(Config::PADDING, Config::PADDING);
-    };
-    void Render(SDL_Surface* Surface) { Layout->Render(Surface); }
+        Layout->ComputeLayout(i_x, i_y);
+    }
 
     void HandleEvent(const SDL_Event& E)
     {
+        if (E.type == UserEvents::DIFFICULTY_CHANGED)
+        {
+            ComputeLayout(Config::PADDING, Config::PADDING);
+            return;
+        }
         Grid.HandleEvent(E);
         Button.HandleEvent(E);
         Counter.HandleEvent(E);

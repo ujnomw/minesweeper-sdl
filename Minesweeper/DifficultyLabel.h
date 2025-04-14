@@ -12,7 +12,7 @@ class DifficultyLabel : public Engine::Rectangle
                  0,
                  Config::DIFFICULTY_LABEL_WIDTH,
                  Config::FOOTER_HEIGHT - Config::PADDING,
-                 "LEVEL :" + GameSettings::GetNextMode(),
+                 "LEVEL: " + GameSettings::GetNextMode(),
                  {50, 50, 50},
                  20}
     {
