@@ -17,11 +17,12 @@ class DifficultyLabel : public Engine::Rectangle
                  20}
     {
         SetWH(Config::DIFFICULTY_LABEL_WIDTH, Config::FOOTER_HEIGHT - Config::PADDING);
-        SetColor({255, 255, 255});
+        SetColor({176, 170, 170});
     };
-    void Render(SDL_Surface*) override;
+    void Render(SDL_Surface *) override;
     void ComputeLayout(int i_x, int i_y) override;
     void SetRect(SDL_Rect i_rect) override;
+    void HandleEvent(const SDL_Event &);
 
    private:
     Engine::Text d_text;

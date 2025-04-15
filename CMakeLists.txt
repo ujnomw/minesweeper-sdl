@@ -42,6 +42,7 @@ add_executable(Sandbox
               "Minesweeper/GameSettings.cpp"
               "Minesweeper/FlagCounter.h"
               "Minesweeper/DifficultyLabel.cpp"
+              "Minesweeper/DifficultySwitch.cpp"
               )
 
 

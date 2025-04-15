@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "Grid.h"
 #include "Minesweeper/DifficultyLabel.h"
+#include "Minesweeper/DifficultySwitch.h"
 #include "Minesweeper/FlagCounter.h"
 #include "Minesweeper/NewGameButton.h"
 
@@ -16,9 +17,10 @@ class MinesweeperUI
     NewGameButton Button;
     FlagCounter Counter;
     DifficultyLabel Label;
-
-    Engine::Layout::Row Footer{Button, Counter};
-    std::unique_ptr<Engine::Layout::UIElement> Footer_{nullptr};
+    DifficultySwitch Switch;
+    Engine::Layout::Row NewGameRow{Button, Counter};
+    Engine::Layout::Row DifficultyRow{Label, Switch};
+    std::unique_ptr<Engine::Layout::UIElement> Footer{nullptr};
     std::unique_ptr<Engine::Layout::Column> Layout{nullptr};
 
    public:
@@ -31,14 +33,13 @@ class MinesweeperUI
     {
         if (GameSettings::GetMode() == Hard)
         {
-            Footer_ = std::make_unique<Engine::Layout::Row>(Button, Counter, Label);
-            Layout = std::make_unique<Engine::Layout::Column>(Grid, *Footer_.get());
+            Footer = std::make_unique<Engine::Layout::Row>(NewGameRow, DifficultyRow);
+            Layout = std::make_unique<Engine::Layout::Column>(Grid, *Footer.get());
         }
         else
         {
-            Footer_ = std::make_unique<Engine::Layout::Row>(Button, Counter);
             Layout =
-                std::make_unique<Engine::Layout::Column>(Grid, *Footer_.get(), Label);
+                std::make_unique<Engine::Layout::Column>(Grid, NewGameRow, DifficultyRow);
         }
         Layout->ComputeLayout(i_x, i_y);
     }
@@ -53,5 +54,7 @@ class MinesweeperUI
         Grid.HandleEvent(E);
         Button.HandleEvent(E);
         Counter.HandleEvent(E);
+        Switch.HandleEvent(E);
+        Label.HandleEvent(E);
     }
 };

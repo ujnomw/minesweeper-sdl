@@ -48,7 +48,6 @@ class NewGameButton : public Engine::Button
 
     void HandleLeftClick() override
     {
-        GameSettings::SwitchNextMode();
         if (GameSettings::IsModeChanged())
         {
             SDL_Event E{UserEvents::DIFFICULTY_CHANGED};

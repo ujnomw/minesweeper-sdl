@@ -53,6 +53,7 @@ void GameSettings::SwitchNextMode()
 
 void GameSettings::UpdateSettings()
 {
+    using namespace Config;
     if (d_nextMode == d_mode) return;
     d_mode = d_nextMode;
     switch (d_nextMode)
@@ -74,6 +75,7 @@ void GameSettings::UpdateSettings()
             d_gridRows = 8;
             d_gridColumns = 16;
             updateGridAndWindow();
+            d_windowHeight -= (FOOTER_HEIGHT + PADDING);
             break;
         default:
             break;
