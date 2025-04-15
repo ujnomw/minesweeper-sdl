@@ -5,20 +5,29 @@
 #include "Engine/Layout.h"
 #include "Engine/Random.h"
 #include "Globals.h"
+#include "Minesweeper/GameSettings.h"
 #include "Minesweeper/MinesweeperAtlas.h"
 
 class MinesweeperGrid : public Engine::Layout::UIElement
 {
    public:
-    MinesweeperGrid(int x, int y)
+    MinesweeperGrid(int x, int y) { SetXY(x, y); }
+
+    void ComputeLayout(int x, int y) override
     {
         using namespace Config;
-        Children.reserve(GRID_COLUMNS * GRID_ROWS);
-        SetWH(GRID_COLUMNS * CELL_SIZE + (GRID_COLUMNS - 1) * PADDING,
-              GRID_ROWS * CELL_SIZE + (GRID_ROWS - 1) * PADDING);
-        for (int Col{1}; Col <= GRID_COLUMNS; ++Col)
+        if (Children.size() > 0)
         {
-            for (int Row{1}; Row <= GRID_ROWS; ++Row)
+            Children.clear();
+        }
+        const int columns = GameSettings::GridColumns();
+        const int rows = GameSettings::GridRows();
+        Children.reserve(columns * rows);
+        SetWH(columns * CELL_SIZE + (columns - 1) * PADDING,
+              rows * CELL_SIZE + (rows - 1) * PADDING);
+        for (int Col{1}; Col <= columns; ++Col)
+        {
+            for (int Row{1}; Row <= rows; ++Row)
             {
                 constexpr int Spacing{CELL_SIZE + PADDING};
                 Children.emplace_back(x + (Spacing) * (Col - 1),
@@ -28,7 +37,7 @@ class MinesweeperGrid : public Engine::Layout::UIElement
         }
     }
 
-    void Render(SDL_Surface* Surface)
+    void Render(SDL_Surface* Surface) override
     {
         for (auto& Child : Children)
         {
@@ -49,7 +58,7 @@ class MinesweeperGrid : public Engine::Layout::UIElement
                 Child.Reset();
             }
             areBombsPlaced = false;
-            // PlaceBombs();
+            return;
         }
         for (auto& Child : Children)
         {
@@ -60,8 +69,10 @@ class MinesweeperGrid : public Engine::Layout::UIElement
    private:
     void PlaceBombs(MinesweeperCell* i_clickedCell)
     {
-        int bombsToPlace{Config::BOMB_COUNT};
-        cellsToClear = Config::GRID_ROWS * Config::GRID_COLUMNS - Config::BOMB_COUNT;
+        int bombsToPlace{GameSettings::BombCount()};
+        const int columns = GameSettings::GridColumns();
+        const int rows = GameSettings::GridRows();
+        cellsToClear = rows * columns - GameSettings::BombCount();
         while (bombsToPlace > 0)
         {
             const size_t bombIndex = Engine::Random::Int(0, Children.size() - 1);

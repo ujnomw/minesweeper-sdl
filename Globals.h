@@ -32,6 +32,9 @@ inline constexpr int FOOTER_HEIGHT{60};
 inline constexpr int FLAG_COUNTER_WIDTH{100};
 inline constexpr int FLAG_COUNTER_ICON_WIDTH{24};
 
+inline constexpr int NEW_GAME_BUTTON_WIDTH{330};
+inline constexpr int DIFFICULTY_LABEL_WIDTH{330};
+
 inline constexpr int GRID_HEIGHT{CELL_SIZE * GRID_ROWS + PADDING * (GRID_ROWS - 1)};
 
 inline constexpr int GRID_WIDTH{CELL_SIZE * GRID_COLUMNS + PADDING * (GRID_COLUMNS - 1)};
@@ -62,6 +65,8 @@ inline const std::vector<SDL_Color> TEXT_COLORS{/* 0 */ {0, 0, 0, 255},  // Unus
 inline const std::string FONT{"assets/Roboto-Medium.ttf"};
 inline const std::string BOMB_PATH{"assets/bomb.png"};
 inline const std::string FLAG_IMAGE{"assets/flag.png"};
+inline const std::string REFRESH_IMAGE{"assets/switch.png"};
+
 }  // namespace Config
 
 namespace UserEvents
@@ -73,6 +78,8 @@ inline Uint32 GAME_LOST = SDL_RegisterEvents(1);
 inline Uint32 NEW_GAME = SDL_RegisterEvents(1);
 inline Uint32 FLAG_PLACED = SDL_RegisterEvents(1);
 inline Uint32 FLAG_CLEARED = SDL_RegisterEvents(1);
+inline Uint32 DIFFICULTY_CHANGED = SDL_RegisterEvents(1);
+inline Uint32 NEXT_DIFFICULTY_CHANGED = SDL_RegisterEvents(1);
 }  // namespace UserEvents
 
 namespace Utils
