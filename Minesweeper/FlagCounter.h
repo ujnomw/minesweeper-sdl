@@ -3,71 +3,18 @@
 #include "Engine/Image.h"
 #include "Engine/Rectangle.h"
 #include "Engine/Text.h"
-#include "Globals.h"
-#include "Minesweeper/GameSettings.h"
 
 class FlagCounter : public Engine::Rectangle
 {
    public:
-    FlagCounter()
-        : Image{Config::FOOTER_HEIGHT - Config::PADDING,
-                Config::FOOTER_HEIGHT - Config::PADDING, Config::FLAG_IMAGE,
-                Config::FLAG_COUNTER_ICON_WIDTH},
-          Text{0,
-               0,
-               Config::FLAG_COUNTER_WIDTH - Config::FOOTER_HEIGHT -
-                   Config::FLAG_COUNTER_ICON_WIDTH,
-               Config::FOOTER_HEIGHT - Config::PADDING,
-               std::to_string(GameSettings::BombCount()),
-               {255, 255, 255, 255},
-               20}
-    {
-        SetWH(Config::FLAG_COUNTER_WIDTH, Config::FOOTER_HEIGHT - Config::PADDING);
-        SetColor(Config::FLAG_COUNTER_COLOR);
-    }
+    FlagCounter();
 
-    void SetRect(SDL_Rect i_rect) override
-    {
-        Rectangle::SetRect(i_rect);
-        Content.SetRect(i_rect);
-    }
+    void SetRect(SDL_Rect i_rect) override;
 
-    void Render(SDL_Surface* Surface) override
-    {
-        Rectangle::Render(Surface);
-        Content.Render(Surface);
-    }
+    void Render(SDL_Surface* Surface) override;
+    void HandleEvent(const SDL_Event& E);
 
-    void HandleEvent(const SDL_Event& E)
-    {
-        if (E.type == UserEvents::FLAG_PLACED)
-        {
-            --FlagsAvailable;
-        }
-        else if (E.type == UserEvents::FLAG_CLEARED)
-        {
-            ++FlagsAvailable;
-        }
-        else if (E.type == UserEvents::GAME_WON)
-        {
-            FlagsAvailable = 0;
-        }
-        else if (E.type == UserEvents::NEW_GAME)
-        {
-            FlagsAvailable = GameSettings::BombCount();
-        }
-        else
-        {
-            return;
-        }
-        Text.SetText(std::to_string(FlagsAvailable));
-    }
-
-    void ComputeLayout(int i_x, int i_y) override
-    {
-        UIElement::ComputeLayout(i_x, i_y);
-        Content.ComputeLayout(i_x, i_y);
-    }
+    void ComputeLayout(int i_x, int i_y) override;
 
    private:
     Engine::Image Image;
