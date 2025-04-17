@@ -2,7 +2,6 @@
 #include <memory>
 
 #include "Engine/Layout.h"
-#include "Globals.h"
 #include "Grid.h"
 #include "Minesweeper/DifficultyLabel.h"
 #include "Minesweeper/DifficultySwitch.h"

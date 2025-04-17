@@ -2,11 +2,8 @@
 
 #include <SDL.h>
 
-#include <concepts>
 #include <iostream>
-#include <memory>
 #include <string>
-#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -65,11 +62,7 @@ class UIElement : public IBox
 
     // Should never be called by SetRect or aliases functions, this method should call
     // them
-    virtual void ComputeLayout(int x, int y)
-    {
-        SetXY(x, y);
-        std::cout << "Base rect " << toString() << std::endl;
-    };
+    virtual void ComputeLayout(int x, int y) { SetXY(x, y); };
 
    protected:
     SDL_Rect d_rect{0, 0, 0, 0};
@@ -97,7 +90,6 @@ class Row : public UIElement
     void ComputeLayout(int i_x, int i_y) override
     {
         SetXY(i_x, i_y);
-        std::cout << "Inside Row rect " << toString() << std::endl;
         if (d_children.empty()) return;
         auto [X, Y] = GetXY();
         int W = 0;
@@ -107,13 +99,11 @@ class Row : public UIElement
         {
             c->ComputeLayout(X, Y);
             auto [_x, _y, w, h] = c->GetRect();
-            std::cout << "child rect " << c->toString() << std::endl;
             if (w < 1 || h < 1)
             {
                 std::cout << "[ERROR]" << "Wrong rect! " << c->toString() << std::endl;
                 continue;
             }
-            std::cout << "Valid rect: " << c->toString() << std::endl;
             SDL_Rect newRect{X, Y, w, h};
             X = X + d_gap + w;
             W += w;
@@ -121,7 +111,6 @@ class Row : public UIElement
         }
         W += (d_children.size() - 1) * d_gap;
         SetWH(W, H);
-        std::cout << W << " x " << H << std::endl;
     };
 
     std::string toString() override { return "Row:" + UIElement::toString(); }
@@ -149,7 +138,6 @@ class Column : public UIElement
     void ComputeLayout(int i_x, int i_y) override
     {
         SetXY(i_x, i_y);
-        std::cout << "Inside Column rect " << toString() << std::endl;
         if (d_children.empty()) return;
         auto [X, Y] = GetXY();
         int W = 0;
@@ -159,7 +147,6 @@ class Column : public UIElement
         {
             c->ComputeLayout(X, Y);
             auto [_x, _y, w, h] = c->GetRect();
-            std::cout << "child rect " << c->toString() << std::endl;
             if (w < 1 || h < 1)
             {
                 std::cout << "[ERROR]" << "Wrong column rect! " << c->toString()
@@ -173,7 +160,6 @@ class Column : public UIElement
         }
         H += (d_children.size() - 1) * d_gap;
         SetWH(W, H);
-        std::cout << W << " x " << H << std::endl;
     };
 
     std::string toString() override { return "Column:" + UIElement::toString(); }

@@ -2,10 +2,6 @@
 
 #include <SDL.h>
 
-#include <iostream>
-
-#include "Globals.h"
-
 MinesweeperCell::MinesweeperCell(int x, int y, int w, int h, int Row, int Col,
                                  MinesweeperAtlas& i_atlas)
     : Button{x, y, w, h}, d_atlas{i_atlas}, Row{Row}, Col{Col} {};

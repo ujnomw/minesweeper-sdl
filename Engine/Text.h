@@ -2,7 +2,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "Globals.h"
 #include "Layout.h"
 
 namespace Engine

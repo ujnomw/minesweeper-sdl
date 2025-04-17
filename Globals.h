@@ -5,9 +5,12 @@
 
 #include <SDL.h>
 
-#include <iostream>
 #include <string>
 #include <vector>
+
+#ifdef SHOW_DEBUG_HELPERS
+#include <iostream>
+#endif
 
 namespace UserEvents
 {

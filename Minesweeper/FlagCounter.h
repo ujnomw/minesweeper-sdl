@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include <string>
 
 #include "Engine/Image.h"
 #include "Engine/Rectangle.h"
@@ -31,7 +29,6 @@ class FlagCounter : public Engine::Rectangle
     void SetRect(SDL_Rect i_rect) override
     {
         Rectangle::SetRect(i_rect);
-        std::cout << "counter set rect" << std::endl;
         Content.SetRect(i_rect);
     }
 

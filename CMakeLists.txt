@@ -43,6 +43,7 @@ add_executable(Sandbox
               "Minesweeper/FlagCounter.h"
               "Minesweeper/DifficultyLabel.cpp"
               "Minesweeper/DifficultySwitch.cpp"
+              "Minesweeper/MinesweeperAtlas.h"
               )
 
 

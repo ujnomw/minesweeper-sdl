@@ -4,7 +4,6 @@
 #include "Cell.h"
 #include "Engine/Layout.h"
 #include "Engine/Random.h"
-#include "Globals.h"
 #include "Minesweeper/GameSettings.h"
 #include "Minesweeper/MinesweeperAtlas.h"
 

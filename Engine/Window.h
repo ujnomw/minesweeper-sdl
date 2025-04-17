@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL.h>
 
-#include "../Globals.h"
+#include "Globals.h"
 #include "Minesweeper/GameSettings.h"
 
 namespace Engine

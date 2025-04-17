@@ -3,7 +3,6 @@
 #include <Globals.h>
 #include <SDL.h>
 
-#include <iostream>
 #include <memory>
 
 #include "Engine/Image.h"
