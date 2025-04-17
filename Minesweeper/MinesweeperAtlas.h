@@ -1,12 +1,12 @@
 #pragma once
 
-#include <Globals.h>
 #include <SDL.h>
 
 #include <memory>
 
 #include "Engine/Image.h"
 #include "Engine/Text.h"
+#include "Globals.h"
 
 class MinesweeperAtlas
 {

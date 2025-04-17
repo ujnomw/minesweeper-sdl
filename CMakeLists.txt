@@ -9,7 +9,7 @@ set(SDL2_IMAGE_DIR /opt/homebrew/opt/sdl2_image)
 set(SDL2_TTF_DIR /opt/homebrew/opt/sdl2_ttf)
 
 include_directories(
-  Sandbox PRIVATE
+  Sandbox PUBLIC
   ${SDL2_DIR}/include/SDL2
   ${SDL2_IMAGE_DIR}/include/SDL2
   ${SDL2_TTF_DIR}/include/SDL2
@@ -25,19 +25,20 @@ link_directories(
 add_executable(Sandbox
               main.cpp
               Globals.h
+              "Engine/Layout.h"
               "Engine/Button.h"
               "Engine/Rectangle.h"
               "Engine/Image.h"
               "Engine/Text.h"
               "Engine/Window.h"
               "Engine/Random.h"
-              "Engine/Layout.h"
               
               "Minesweeper/Grid.h"
-              "Minesweeper/UI.cpp"
               "Minesweeper/Cell.h"
               "Minesweeper/Cell.cpp"
               "Minesweeper/NewGameButton.h"
+              "Minesweeper/NewGameButton.cpp"
+              "Minesweeper/UI.cpp"
               "Minesweeper/GameSettings.cpp"
               "Minesweeper/FlagCounter.h"
               "Minesweeper/DifficultyLabel.cpp"
