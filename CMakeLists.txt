@@ -33,9 +33,8 @@ add_executable(Sandbox
               "Engine/Random.h"
               "Engine/Layout.h"
               
-              "Minesweeper/UI.h"
               "Minesweeper/Grid.h"
-              "Minesweeper/UI.h"
+              "Minesweeper/UI.cpp"
               "Minesweeper/Cell.h"
               "Minesweeper/Cell.cpp"
               "Minesweeper/NewGameButton.h"
