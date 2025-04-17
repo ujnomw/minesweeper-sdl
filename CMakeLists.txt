@@ -34,6 +34,7 @@ add_executable(Sandbox
               "Engine/Random.h"
               
               "Minesweeper/Grid.h"
+              "Minesweeper/Grid.cpp"
               "Minesweeper/Cell.h"
               "Minesweeper/Cell.cpp"
               "Minesweeper/NewGameButton.h"
@@ -45,6 +46,7 @@ add_executable(Sandbox
               "Minesweeper/DifficultyLabel.cpp"
               "Minesweeper/DifficultySwitch.cpp"
               "Minesweeper/MinesweeperAtlas.h"
+              "Minesweeper/MinesweeperAtlas.cpp"
               )
 
 

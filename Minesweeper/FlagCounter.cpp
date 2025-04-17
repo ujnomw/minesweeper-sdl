@@ -13,7 +13,8 @@ FlagCounter::FlagCounter()
            Config::FOOTER_HEIGHT - Config::PADDING,
            std::to_string(GameSettings::BombCount()),
            {255, 255, 255, 255},
-           20}
+           20},
+      FlagsAvailable{GameSettings::BombCount()}
 {
     SetWH(Config::FLAG_COUNTER_WIDTH, Config::FOOTER_HEIGHT - Config::PADDING);
     SetColor(Config::FLAG_COUNTER_COLOR);

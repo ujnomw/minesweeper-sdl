@@ -20,5 +20,5 @@ class FlagCounter : public Engine::Rectangle
     Engine::Image Image;
     Engine::Text Text;
     Engine::Layout::Row Content{Image, Text};
-    int FlagsAvailable{GameSettings::BombCount()};
+    int FlagsAvailable;
 };
