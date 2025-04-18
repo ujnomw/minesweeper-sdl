@@ -2,6 +2,7 @@
 
 #include "Engine/Rectangle.h"
 #include "Engine/Text.h"
+#include "Globals.h"
 #include "Minesweeper/GameSettings.h"
 
 class DifficultyLabel : public Engine::Rectangle
