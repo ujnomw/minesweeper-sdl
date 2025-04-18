@@ -24,7 +24,7 @@ link_directories(
 
 add_executable(Sandbox
               main.cpp
-              Globals.h
+              "Globals.h"
               "Engine/Column.h"
               "Engine/Column.cpp"
               "Engine/Row.h"
@@ -50,6 +50,7 @@ add_executable(Sandbox
               "Minesweeper/NewGameButton.h"
               "Minesweeper/NewGameButton.cpp"
               "Minesweeper/UI.cpp"
+              "Minesweeper/UI.h"
               "Minesweeper/GameSettings.cpp"
               "Minesweeper/FlagCounter.h"
               "Minesweeper/FlagCounter.cpp"

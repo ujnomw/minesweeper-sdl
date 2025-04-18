@@ -4,10 +4,10 @@
 #include "Engine/Column.h"
 #include "Engine/Row.h"
 #include "Engine/UIElement.h"
-#include "Grid.h"
 #include "Minesweeper/DifficultyLabel.h"
 #include "Minesweeper/DifficultySwitch.h"
 #include "Minesweeper/FlagCounter.h"
+#include "Minesweeper/Grid.h"
 #include "Minesweeper/NewGameButton.h"
 
 class MinesweeperUI

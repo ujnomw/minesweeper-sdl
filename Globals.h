@@ -12,10 +12,6 @@
 #include <iostream>
 #endif
 
-namespace UserEvents
-{
-}
-
 namespace Config
 {
 // Game Settings
