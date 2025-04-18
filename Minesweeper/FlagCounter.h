@@ -2,6 +2,7 @@
 
 #include "Engine/Image.h"
 #include "Engine/Rectangle.h"
+#include "Engine/Row.h"
 #include "Engine/Text.h"
 
 class FlagCounter : public Engine::Rectangle

@@ -25,7 +25,10 @@ link_directories(
 add_executable(Sandbox
               main.cpp
               Globals.h
-              "Engine/Layout.h"
+              "Engine/Column.h"
+              "Engine/Column.cpp"
+              "Engine/Row.h"
+              "Engine/Row.cpp"
               "Engine/Button.h"
               "Engine/Rectangle.h"
               "Engine/Image.h"
@@ -33,6 +36,8 @@ add_executable(Sandbox
               "Engine/Window.h"
               "Engine/Window.cpp"
               "Engine/Random.h"
+              "Engine/UIElement.h"
+              "Engine/UIElement.cpp"
               
               "Minesweeper/Grid.h"
               "Minesweeper/Grid.cpp"

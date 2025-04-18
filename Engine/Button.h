@@ -1,6 +1,6 @@
 #pragma once
+#include "Globals.h"
 #include "Rectangle.h"
-
 namespace Engine
 {
 

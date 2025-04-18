@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "Cell.h"
-#include "Engine/Layout.h"
+#include "Engine/UIElement.h"
 #include "MinesweeperAtlas.h"
 
 class MinesweeperCell;
