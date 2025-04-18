@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "Layout.h"
+#include "UIElement.h"
 
 namespace Engine
 {
@@ -11,72 +11,20 @@ class Text : public Layout::UIElement
    public:
     Text() {};
     Text(int x, int y, int w, int h, const std::string& Content,
-         SDL_Color Color = {0, 0, 0, 255}, int FontSize = 30)
-        : Color{Color}
-    {
-        SetRect({x, y, w, h});
-        Font = TTF_OpenFont(Config::FONT.c_str(), FontSize);
-#ifdef SHOW_DEBUG_HELPERS
-        Utils::CheckSDLError("TTF_OpenFont");
-#endif
-        SetText(Content);
-    }
+         SDL_Color Color = {0, 0, 0, 255}, int FontSize = 30);
 
-    void SetText(const std::string& Text) { SetText(Text, Color); }
+    void SetText(const std::string& Text);
 
-    void SetText(const std::string& Text, SDL_Color NewColor)
-    {
-        if (TextSurface)
-        {
-            SDL_FreeSurface(TextSurface);
-        }
-        Color = NewColor;
+    void SetText(const std::string& Text, SDL_Color NewColor);
 
-        TextSurface = TTF_RenderUTF8_Blended(Font, Text.c_str(), Color);
-        updateTextPosition();
-    }
+    void Render(SDL_Surface* Surface) override;
 
-    void Render(SDL_Surface* Surface) override
-    {
-        SDL_BlitSurface(TextSurface, nullptr, Surface, &TextPosition);
-    }
+    void ComputeLayout(int i_x, int i_y) override;
 
-    void ComputeLayout(int i_x, int i_y) override
-    {
-        SetXY(i_x, i_y);
-        updateTextPosition();
-    }
-
-    ~Text()
-    {
-        if (Font)
-        {
-            TTF_CloseFont(Font);
-        }
-        if (TextSurface)
-        {
-            SDL_FreeSurface(TextSurface);
-        }
-    }
+    ~Text();
 
    private:
-    void updateTextPosition()
-    {
-        if (TextSurface == nullptr)
-        {
-            return;
-        }
-        auto [x, y, w, h] = GetRect();
-        // Horizontally centering
-        const int WidthDifference{w - TextSurface->w};
-        const int LeftOffset{WidthDifference / 2};
-
-        // Vertically centering
-        const int HeightDifference{h - TextSurface->h};
-        const int TopOffset{HeightDifference / 2};
-
-        TextPosition = {x + LeftOffset, y + TopOffset, w, h};
-    }
+    void updateTextPosition();
 
    private:
     SDL_Surface* TextSurface{nullptr};

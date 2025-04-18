@@ -1,7 +1,9 @@
 #pragma once
 #include <memory>
 
-#include "Engine/Layout.h"
+#include "Engine/Column.h"
+#include "Engine/Row.h"
+#include "Engine/UIElement.h"
 #include "Grid.h"
 #include "Minesweeper/DifficultyLabel.h"
 #include "Minesweeper/DifficultySwitch.h"
