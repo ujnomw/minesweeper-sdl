@@ -1,45 +1,25 @@
 #pragma once
 #include <SDL.h>
 
-#include "Globals.h"
-#include "Minesweeper/GameSettings.h"
-
 namespace Engine
 {
 
 class Window
 {
    public:
-    Window()
-    {
-        SDLWindow = SDL_CreateWindow(Config::GAME_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED,
-                                     SDL_WINDOWPOS_UNDEFINED, GameSettings::WindowWidth(),
-                                     GameSettings::WindowsHeight(), 0);
-    }
+    Window();
 
-    void Render()
-    {
-        SDL_FillRect(GetSurface(), nullptr,
-                     SDL_MapRGB(GetSurface()->format, Config::BACKGROUND_COLOR.r,
-                                Config::BACKGROUND_COLOR.g, Config::BACKGROUND_COLOR.b));
-    }
+    void Render();
 
-    void Update() { SDL_UpdateWindowSurface(SDLWindow); }
+    void Update();
 
-    SDL_Surface *GetSurface() { return SDL_GetWindowSurface(SDLWindow); }
+    SDL_Surface *GetSurface();
 
-    void SetWH(int w, int h) { SDL_SetWindowSize(SDLWindow, w, h); }
+    void SetWH(int w, int h);
 
-    void HandelEvents(const SDL_Event &i_event)
-    {
-        if (i_event.type == UserEvents::DIFFICULTY_CHANGED)
-        {
-            GameSettings::UpdateSettings();
-            SetWH(GameSettings::WindowWidth(), GameSettings::WindowsHeight());
-        }
-    }
+    void HandelEvents(const SDL_Event &i_event);
 
-    ~Window() { SDL_DestroyWindow(SDLWindow); }
+    ~Window();
 
     Window(const Window &) = delete;
     Window &operator=(const Window &) = delete;

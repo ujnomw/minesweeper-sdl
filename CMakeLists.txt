@@ -31,6 +31,7 @@ add_executable(Sandbox
               "Engine/Image.h"
               "Engine/Text.h"
               "Engine/Window.h"
+              "Engine/Window.cpp"
               "Engine/Random.h"
               
               "Minesweeper/Grid.h"
