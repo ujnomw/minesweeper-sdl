@@ -51,7 +51,7 @@ int main(int argc, char** argv)
             }
             else
             {
-                GameWindow.HandelEvents(Event);
+                GameWindow.HandelEvent(Event);
                 UI.HandleEvent(Event);
             }
         }

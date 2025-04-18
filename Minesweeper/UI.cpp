@@ -1,6 +1,10 @@
 #include "Minesweeper/UI.h"
 
-MinesweeperUI::MinesweeperUI() { ComputeLayout(Config::PADDING, Config::PADDING); };
+MinesweeperUI::MinesweeperUI()
+{
+    ComputeLayout(Config::PADDING, Config::PADDING);
+    Grid.SetParentEventReceiver(&d_eventReceiver);
+};
 void MinesweeperUI::Render(SDL_Surface* Surface) { Layout->Render(Surface); }
 
 // TODO: Make simple, once assignment and move constructors are done for layout

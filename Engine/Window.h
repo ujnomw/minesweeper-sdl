@@ -17,7 +17,7 @@ class Window
 
     void SetWH(int w, int h);
 
-    void HandelEvents(const SDL_Event &i_event);
+    void HandelEvent(const SDL_Event &i_event);
 
     ~Window();
 

@@ -10,7 +10,7 @@
 #include "Minesweeper/Grid.h"
 #include "Minesweeper/NewGameButton.h"
 
-class MinesweeperUI
+class MinesweeperUI : public Engine::Layout::UIElement
 
 {
    private:

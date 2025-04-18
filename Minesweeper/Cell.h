@@ -17,6 +17,13 @@ class MinesweeperCell : public Engine::Button
     void Render(SDL_Surface* Surface) override;
     bool PlaceBomb();
     bool isAdjustend(MinesweeperCell* i_other) const;
+    void SetParentEventReceiver(EventReceiver* i_parent) override
+    {
+        using namespace UserEvents;
+        i_parent->SubscribeToEventTypes(GetEventReceiver(),
+                                        {CELL_CLEARED, BOMB_PLACED, GAME_WON, GAME_LOST,
+                                         SDL_MOUSEMOTION, SDL_MOUSEBUTTONDOWN});
+    }
     void Reset();
 
     [[nodiscard]]

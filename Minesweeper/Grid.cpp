@@ -22,8 +22,15 @@ void MinesweeperGrid::ComputeLayout(int x, int y)
         for (int Row{1}; Row <= rows; ++Row)
         {
             constexpr int Spacing{CELL_SIZE + PADDING};
-            Children.emplace_back(x + (Spacing) * (Col - 1), y + (Spacing) * (Row - 1),
-                                  CELL_SIZE, CELL_SIZE, Row, Col, d_atlas);
+            MinesweeperCell cell{x + (Spacing) * (Col - 1),
+                                 y + (Spacing) * (Row - 1),
+                                 CELL_SIZE,
+                                 CELL_SIZE,
+                                 Row,
+                                 Col,
+                                 d_atlas};
+            Children.emplace_back(cell);
+            Children.back().SetParentEventReceiver(&d_eventReceiver);
         }
     }
 }
@@ -53,7 +60,9 @@ void MinesweeperGrid::HandleEvent(const SDL_Event& E)
     }
     for (auto& Child : Children)
     {
-        Child.HandleEvent(E);
+        if (d_eventReceiver.IsChildSubscribedToEventType(Child.GetEventReceiver(),
+                                                         E.type))
+            Child.HandleEvent(E);
     }
 }
 

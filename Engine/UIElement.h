@@ -5,6 +5,7 @@
 #include <string>
 #include <utility>
 
+#include "EventReceiver.h"
 namespace Engine::Layout
 {
 using BoundsPair = std::pair<int, int>;
@@ -38,7 +39,12 @@ class UIElement : public IBox
     // them
     virtual void ComputeLayout(int x, int y);
 
+    EventReceiver* GetEventReceiver() { return &d_eventReceiver; }
+
+    virtual void SetParentEventReceiver(EventReceiver* i_parent) { return; };
+
    protected:
     SDL_Rect d_rect{0, 0, 0, 0};
+    EventReceiver d_eventReceiver;
 };
 }  // namespace Engine::Layout

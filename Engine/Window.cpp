@@ -24,7 +24,7 @@ SDL_Surface *Window::GetSurface() { return SDL_GetWindowSurface(SDLWindow); }
 
 void Window::SetWH(int w, int h) { SDL_SetWindowSize(SDLWindow, w, h); }
 
-void Window::HandelEvents(const SDL_Event &i_event)
+void Window::HandelEvent(const SDL_Event &i_event)
 {
     if (i_event.type == UserEvents::DIFFICULTY_CHANGED)
     {

@@ -42,6 +42,7 @@ add_executable(Sandbox
               "Engine/Random.h"
               "Engine/UIElement.h"
               "Engine/UIElement.cpp"
+              "Engine/EventReceiver.h"
               
               "Minesweeper/Grid.h"
               "Minesweeper/Grid.cpp"
