@@ -42,6 +42,16 @@ add_executable(Sandbox
               "Engine/Random.h"
               "Engine/UIElement.h"
               "Engine/UIElement.cpp"
+
+              "Engine_DO/EntityID.h"
+              "Engine_DO/Entity.h"
+              "Engine_DO/Entity.cpp"
+              "Engine_DO/EntityManager.h"
+              "Engine_DO/EntityManager.cpp"
+              "Engine_DO/World.h"
+              "Engine_DO/World.cpp"
+              "Engine_DO/WorldImpl.h"
+              "Engine_DO/WorldImpl.cpp"
               
               "Minesweeper/Grid.h"
               "Minesweeper/Grid.cpp"
