@@ -5,6 +5,8 @@
 
 #include "Engine/Window.h"
 #include "Engine_DO/EntityManager.h"
+#include "Engine_DO/World.h"
+#include "Engine_DO/WorldImpl.h"
 #include "Globals.h"
 #include "MS_DO/GameLoop.h"
 #include "Minesweeper/GameSettings.h"
@@ -32,7 +34,8 @@ int main(int argc, char** argv)
     MinesweeperUI UI;
 
     // Entity::EntityManager em;
-    GameLoop::init();
+    auto worldImpl{World::WorldImpl(GameLoop::init())};
+    auto world{World::World(worldImpl)};
 
     SDL_Event Event;
     bool shouldQuit{false};
@@ -56,12 +59,13 @@ int main(int argc, char** argv)
             }
             else
             {
-                GameWindow.HandelEvents(Event);
-                UI.HandleEvent(Event);
+                // GameWindow.HandelEvents(Event);
+                // UI.HandleEvent(Event);
             }
         }
         GameWindow.Render();
-        UI.Render(GameWindow.GetSurface());
+        // UI.Render(GameWindow.GetSurface());
+        GameLoop::render(worldImpl.GetEM(), GameWindow.GetSurface());
         GameWindow.Update();
 #ifdef FRAME_PERF_DEBUG
         const auto frameEnd{std::chrono::steady_clock::now()};

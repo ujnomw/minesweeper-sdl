@@ -6,14 +6,14 @@
 
 namespace GameLoop
 {
-void init()
+Entity::EntityManager* init()
 {
     auto em = Entity::createManager(14);
-    auto& entities_em = em.entities;
-    auto& children_em = em.children;
-    auto& parents_em = em.parents;
-    auto& sizes_em = em.sizes;
-    auto& positions_em = em.positions;
+    auto& entities_em = em->entities;
+    auto& children_em = em->children;
+    auto& parents_em = em->parents;
+    auto& sizes_em = em->sizes;
+    auto& positions_em = em->positions;
 
     // UI init
     // Column
@@ -72,7 +72,7 @@ void init()
     Entity::EntityIdCollection res;
     Entity::EntityIdCollection toCreate{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
-    Entity::createEntities(entities_em, em.ids, toCreate, em.nextId);
+    Entity::createEntities(entities_em, em->ids, toCreate, em->nextId);
 
     // Sizes
     std::vector<Entity::Size> sizes;
@@ -127,5 +127,53 @@ void init()
 
     Entity::computeLayout(entities_em, children_em, sizes_em, positions_em, layoutId,
                           {Config::PADDING, Config::PADDING});
+    return em;
+}
+
+void render(Entity::EntityManager& em, SDL_Surface* i_surface)
+{
+    // Lambda to set a pixel
+    auto setPixel = [](SDL_Surface* surface, int x, int y, Uint32 color)
+    {
+        if (x < 0 || x >= surface->w || y < 0 || y >= surface->h) return;
+        Uint8* pixelPtr = (Uint8*)surface->pixels + y * surface->pitch +
+                          x * surface->format->BytesPerPixel;
+        *(Uint32*)pixelPtr = color;
+    };
+
+    // Lambda to draw rect border
+    auto drawRectBorder = [&](SDL_Rect rect, Uint32 color)
+    {
+        for (int x = rect.x; x < rect.x + rect.w; ++x)
+        {
+            setPixel(i_surface, x, rect.y, color);               // Top
+            setPixel(i_surface, x, rect.y + rect.h - 1, color);  // Bottom
+        }
+        for (int y = rect.y; y < rect.y + rect.h; ++y)
+        {
+            setPixel(i_surface, rect.x, y, color);               // Left
+            setPixel(i_surface, rect.x + rect.w - 1, y, color);  // Right
+        }
+    };
+
+    auto& entities_em = em.entities;
+    auto& children_em = em.children;
+    auto& parents_em = em.parents;
+    auto& sizes_em = em.sizes;
+    auto& positions_em = em.positions;
+
+    for (int id = 0; id < entities_em.size(); id++)
+    {
+        auto e = entities_em[id];
+        auto [w, h] = sizes_em[id];
+        if (w < 1 || h < 1) continue;
+        auto entityColor = e.d_backgroundColor;
+        Uint32 color =
+            SDL_MapRGB(i_surface->format, entityColor.r, entityColor.g, entityColor.b);
+        auto [x, y] = positions_em[id];
+
+        SDL_Rect rect{(int)x, (int)y, (int)w, (int)h};
+        drawRectBorder(rect, color);
+    }
 }
 }  // namespace GameLoop

@@ -6,15 +6,15 @@
 namespace Entity
 {
 
-EntityManager createManager(uint i_maxEntities)
+EntityManager* createManager(uint i_maxEntities)
 {
-    EntityManager em;
-    em.entities.resize(i_maxEntities);
-    em.ids.resize(i_maxEntities);
-    em.children.resize(i_maxEntities);
-    em.parents.resize(i_maxEntities);
-    em.positions.resize(i_maxEntities);
-    em.sizes.resize(i_maxEntities);
+    auto* em = new EntityManager();
+    em->entities.resize(i_maxEntities);
+    em->ids.resize(i_maxEntities);
+    em->children.resize(i_maxEntities);
+    em->parents.resize(i_maxEntities);
+    em->positions.resize(i_maxEntities);
+    em->sizes.resize(i_maxEntities);
     return em;
 }
 

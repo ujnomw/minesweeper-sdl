@@ -10,9 +10,11 @@ namespace World
 class WorldImpl
 {
    public:
-    WorldImpl();
+    WorldImpl(Entity::EntityManager* i_em);
+    Entity::EntityManager& GetEM();
+    ~WorldImpl();
 
    private:
-    std::shared_ptr<Entity::EntityManager> d_em;
+    Entity::EntityManager* d_em{nullptr};
 };
 }  // namespace World

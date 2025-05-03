@@ -5,10 +5,10 @@ class WorldImpl;
 class World
 {
    private:
-    WorldImpl* d_worldImpl;
+    WorldImpl& d_worldImpl;
 
    public:
-    World();
+    World(WorldImpl&);
     WorldImpl& Get();
     ~World();
 };

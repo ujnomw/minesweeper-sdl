@@ -9,7 +9,7 @@ struct EntityManager;
 
 namespace GameLoop
 {
-extern void init(/**/);
+extern Entity::EntityManager* init(/**/);
 extern void update(Entity::EntityManager& em, SDL_Event& i_event);
-extern void render(Entity::EntityManager& em);
+extern void render(Entity::EntityManager& em, SDL_Surface* i_surface);
 }  // namespace GameLoop

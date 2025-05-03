@@ -34,7 +34,7 @@ struct EntityManager
     EntityId nextId = 0;
 };
 
-extern EntityManager createManager(uint);
+extern EntityManager* createManager(uint);
 
 extern bool createEntities(EntityCollection& i_entities, EntityIdCollection& i_ids,
                            EntityIdCollection& o_res, EntityId& nextId);

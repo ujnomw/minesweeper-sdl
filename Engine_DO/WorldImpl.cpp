@@ -3,5 +3,12 @@
 #include "EntityManager.h"
 namespace World
 {
-WorldImpl::WorldImpl() { d_em = std::make_shared<Entity::EntityManager>(); }
+WorldImpl::WorldImpl(Entity::EntityManager* i_em) { d_em = i_em; }
+
+Entity::EntityManager& WorldImpl::GetEM() { return *d_em; }
+
+WorldImpl::~WorldImpl()
+{
+    if (d_em) delete d_em;
+}
 }  // namespace World
