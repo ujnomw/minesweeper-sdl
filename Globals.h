@@ -17,29 +17,29 @@ namespace Config
 // Game Settings
 inline const std::string GAME_NAME{"Minesweeper"};
 
-inline constexpr int BOMB_COUNT{6};
+inline constexpr uint BOMB_COUNT{6};
 
-inline constexpr int GRID_COLUMNS{8};
-inline constexpr int GRID_ROWS{4};
+inline constexpr uint GRID_COLUMNS{8};
+inline constexpr uint GRID_ROWS{4};
 
 static_assert(BOMB_COUNT < GRID_COLUMNS * GRID_ROWS, "Cannot have more bombs than cells");
 
 // Size and Positioning
-inline constexpr int PADDING{5};
-inline constexpr int CELL_SIZE{50};
-inline constexpr int FOOTER_HEIGHT{60};
-inline constexpr int FLAG_COUNTER_WIDTH{100};
-inline constexpr int FLAG_COUNTER_ICON_WIDTH{24};
+inline constexpr uint PADDING{5};
+inline constexpr uint CELL_SIZE{50};
+inline constexpr uint FOOTER_HEIGHT{60};
+inline constexpr uint FLAG_COUNTER_WIDTH{100};
+inline constexpr uint FLAG_COUNTER_ICON_WIDTH{24};
 
-inline constexpr int NEW_GAME_BUTTON_WIDTH{330};
-inline constexpr int DIFFICULTY_LABEL_WIDTH{330};
+inline constexpr uint NEW_GAME_BUTTON_WIDTH{330};
+inline constexpr uint DIFFICULTY_LABEL_WIDTH{330};
 
-inline constexpr int GRID_HEIGHT{CELL_SIZE * GRID_ROWS + PADDING * (GRID_ROWS - 1)};
+inline constexpr uint GRID_HEIGHT{CELL_SIZE * GRID_ROWS + PADDING * (GRID_ROWS - 1)};
 
-inline constexpr int GRID_WIDTH{CELL_SIZE * GRID_COLUMNS + PADDING * (GRID_COLUMNS - 1)};
+inline constexpr uint GRID_WIDTH{CELL_SIZE * GRID_COLUMNS + PADDING * (GRID_COLUMNS - 1)};
 
-inline constexpr int WINDOW_HEIGHT{GRID_HEIGHT + FOOTER_HEIGHT + PADDING * 2};
-inline constexpr int WINDOW_WIDTH{GRID_WIDTH + PADDING * 2};
+inline constexpr uint WINDOW_HEIGHT{GRID_HEIGHT + FOOTER_HEIGHT + PADDING * 2};
+inline constexpr uint WINDOW_WIDTH{GRID_WIDTH + PADDING * 2};
 
 // Colors
 inline constexpr SDL_Color BACKGROUND_COLOR{170, 170, 170, 255};

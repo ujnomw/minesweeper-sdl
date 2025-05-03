@@ -4,7 +4,9 @@
 #include <chrono>
 
 #include "Engine/Window.h"
+#include "Engine_DO/EntityManager.h"
 #include "Globals.h"
+#include "MS_DO/GameLoop.h"
 #include "Minesweeper/GameSettings.h"
 #include "Minesweeper/UI.h"
 
@@ -28,6 +30,9 @@ int main(int argc, char** argv)
     GameSettings::UpdateSettings();
     Engine::Window GameWindow;
     MinesweeperUI UI;
+
+    // Entity::EntityManager em;
+    GameLoop::init();
 
     SDL_Event Event;
     bool shouldQuit{false};
