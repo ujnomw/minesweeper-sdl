@@ -2,6 +2,7 @@
 #include <SDL_ttf.h>
 
 #include <chrono>
+#include <memory>
 
 #include "Engine/Window.h"
 #include "Engine_DO/EntityManager.h"
@@ -33,9 +34,8 @@ int main(int argc, char** argv)
     Engine::Window GameWindow;
     MinesweeperUI UI;
 
-    // Entity::EntityManager em;
-    auto worldImpl{World::WorldImpl(GameLoop::init())};
-    auto world{World::World(worldImpl)};
+    std::unique_ptr<Entity::EntityManager> em =
+        std::unique_ptr<Entity::EntityManager>(GameLoop::init());
 
     SDL_Event Event;
     bool shouldQuit{false};
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
         }
         GameWindow.Render();
         // UI.Render(GameWindow.GetSurface());
-        GameLoop::render(worldImpl.GetEM(), GameWindow.GetSurface());
+        GameLoop::render(*em.get(), GameWindow.GetSurface());
         GameWindow.Update();
 #ifdef FRAME_PERF_DEBUG
         const auto frameEnd{std::chrono::steady_clock::now()};
