@@ -6,6 +6,40 @@
 
 namespace GameLoop
 {
+// Column
+const Entity::EntityId layoutId = 0;
+// Grid
+const Entity::EntityId gridId = 1;
+// Lower Two Rows Container
+// Could be row or col depending on the layout
+const Entity::EntityId lowerRowsContainerId = 2;
+// NewGame + Flag Row
+const Entity::EntityId newGameRowId = 3;
+// Diff Level Row
+Entity::EntityId difficultyRowId = 4;
+// Flag Counter Row
+const Entity::EntityId flagCounterId = 5;
+
+// New Game Button
+const Entity::EntityId newGameButtonId = 6;
+// // New Game Text
+// Entity::EntityId newGameTextId = 7;
+
+// // Flag Counter Image
+// Entity::EntityId flagCounterImageId = 8;
+// // Flag Counter Text
+// Entity::EntityId flagCounterTextId = 9;
+
+// Diff Label Rect
+const Entity::EntityId difficultyLabelId = 10;
+// // Diff Label Text
+// Entity::EntityId difficultyTextId = 11;
+
+// Switch Button
+const Entity::EntityId switchButtonId = 12;
+// // Switch Image
+// Entity::EntityId switchImageId = 13;
+
 Entity::EntityManager* init()
 {
     auto em = Entity::createManager(14);
@@ -16,39 +50,7 @@ Entity::EntityManager* init()
     auto& positions_em = em->positions;
 
     // UI init
-    // Column
-    Entity::EntityId layoutId = 0;
-    // Grid
-    Entity::EntityId gridId = 1;
-    // Lower Two Rows Container
-    // Could be row or col depending on the layout
-    Entity::EntityId lowerRowsContainerId = 2;
-    // NewGame + Flag Row
-    Entity::EntityId newGameRowId = 3;
-    // Diff Level Row
-    Entity::EntityId difficultyRowId = 4;
-    // Flag Counter Row
-    Entity::EntityId flagCounterId = 5;
 
-    // New Game Button
-    Entity::EntityId newGameButtonId = 6;
-    // // New Game Text
-    // Entity::EntityId newGameTextId = 7;
-
-    // // Flag Counter Image
-    // Entity::EntityId flagCounterImageId = 8;
-    // // Flag Counter Text
-    // Entity::EntityId flagCounterTextId = 9;
-
-    // Diff Label Rect
-    Entity::EntityId difficultyLabelId = 10;
-    // // Diff Label Text
-    // Entity::EntityId difficultyTextId = 11;
-
-    // Switch Button
-    Entity::EntityId switchButtonId = 12;
-    // // Switch Image
-    // Entity::EntityId switchImageId = 13;
     // Layout heirarchy
     Entity::EntityIdCollection layoutChildren = {gridId, lowerRowsContainerId};
     Entity::setParent(parents_em, children_em, layoutChildren, layoutId);
@@ -130,32 +132,8 @@ Entity::EntityManager* init()
     return em;
 }
 
-void render(Entity::EntityManager& em, SDL_Surface* i_surface)
+void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
 {
-    // Lambda to set a pixel
-    auto setPixel = [](SDL_Surface* surface, int x, int y, Uint32 color)
-    {
-        if (x < 0 || x >= surface->w || y < 0 || y >= surface->h) return;
-        Uint8* pixelPtr = (Uint8*)surface->pixels + y * surface->pitch +
-                          x * surface->format->BytesPerPixel;
-        *(Uint32*)pixelPtr = color;
-    };
-
-    // Lambda to draw rect border
-    auto drawRectBorder = [&](SDL_Rect rect, Uint32 color)
-    {
-        for (int x = rect.x; x < rect.x + rect.w; ++x)
-        {
-            setPixel(i_surface, x, rect.y, color);               // Top
-            setPixel(i_surface, x, rect.y + rect.h - 1, color);  // Bottom
-        }
-        for (int y = rect.y; y < rect.y + rect.h; ++y)
-        {
-            setPixel(i_surface, rect.x, y, color);               // Left
-            setPixel(i_surface, rect.x + rect.w - 1, y, color);  // Right
-        }
-    };
-
     auto& entities_em = em.entities;
     auto& children_em = em.children;
     auto& parents_em = em.parents;
@@ -167,13 +145,13 @@ void render(Entity::EntityManager& em, SDL_Surface* i_surface)
         auto e = entities_em[id];
         auto [w, h] = sizes_em[id];
         if (w < 1 || h < 1) continue;
-        auto entityColor = e.d_backgroundColor;
-        Uint32 color =
-            SDL_MapRGB(i_surface->format, entityColor.r, entityColor.g, entityColor.b);
+        auto [r, g, b, a] = e.d_backgroundColor;
         auto [x, y] = positions_em[id];
 
         SDL_Rect rect{(int)x, (int)y, (int)w, (int)h};
-        drawRectBorder(rect, color);
+        SDL_SetRenderDrawColor(i_renderer, r, g, b, a);
+        SDL_RenderDrawRect(i_renderer, &rect);
     }
+    SDL_RenderPresent(i_renderer);
 }
 }  // namespace GameLoop

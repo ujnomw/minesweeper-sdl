@@ -14,6 +14,7 @@ class Window
     void Update();
 
     SDL_Surface *GetSurface();
+    SDL_Renderer *GetRenderer();
 
     void SetWH(int w, int h);
 
@@ -26,5 +27,6 @@ class Window
 
    private:
     SDL_Window *SDLWindow;
+    SDL_Renderer *d_renderer;
 };
 }  // namespace Engine

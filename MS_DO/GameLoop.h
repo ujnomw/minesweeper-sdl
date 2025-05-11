@@ -11,5 +11,5 @@ namespace GameLoop
 {
 extern Entity::EntityManager* init(/**/);
 extern void update(Entity::EntityManager& em, SDL_Event& i_event);
-extern void render(Entity::EntityManager& em, SDL_Surface* i_surface);
+extern void render(Entity::EntityManager& em, SDL_Renderer* i_renderer);
 }  // namespace GameLoop

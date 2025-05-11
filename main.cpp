@@ -65,7 +65,7 @@ int main(int argc, char** argv)
         }
         GameWindow.Render();
         // UI.Render(GameWindow.GetSurface());
-        GameLoop::render(*em.get(), GameWindow.GetSurface());
+        GameLoop::render(*em.get(), GameWindow.GetRenderer());
         GameWindow.Update();
 #ifdef FRAME_PERF_DEBUG
         const auto frameEnd{std::chrono::steady_clock::now()};
