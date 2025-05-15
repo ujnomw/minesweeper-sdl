@@ -113,6 +113,9 @@ Entity::EntityManager* init()
     std::string newGameWording = "NEW GAME";
     Entity::createText(*em, newGameButtonId, newGameWording, {0, 0, 0, 255}, 20,
                        sizes_em[newGameButtonId]);
+    std::string levelWording = "LEVEL: " + GameSettings::GetNextMode();
+    Entity::createText(*em, difficultyLabelId, levelWording, {0, 0, 0, 255}, 20,
+                       sizes_em[difficultyLabelId]);
 
     // Setting types for layout
     Entity::EntityIdCollection columns = {layoutId};
@@ -145,9 +148,6 @@ void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
     auto& sizes_em = em.sizes;
     auto& positions_em = em.positions;
 
-    Entity::EntityIdCollection textIds = {newGameButtonId};
-    Entity::renderTexts(em, i_renderer, textIds);
-
     for (int id = 0; id < entities_em.size(); id++)
     {
         auto& e = entities_em[id];
@@ -160,6 +160,8 @@ void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
         SDL_SetRenderDrawColor(i_renderer, r, g, b, a);
         SDL_RenderDrawRect(i_renderer, &rect);
     }
+    Entity::EntityIdCollection textIds = {newGameButtonId, difficultyLabelId};
+    Entity::renderTexts(em, i_renderer, textIds);
     SDL_RenderPresent(i_renderer);
 }
 }  // namespace GameLoop
