@@ -1,6 +1,7 @@
 #include "GameLoop.h"
 
 #include "Engine_DO/EntityManager.h"
+#include "Engine_DO/Image.h"
 #include "Engine_DO/Text.h"
 #include "Globals.h"
 #include "Minesweeper/GameSettings.h"
@@ -116,6 +117,7 @@ Entity::EntityManager* init()
     std::string levelWording = "LEVEL: " + GameSettings::GetNextMode();
     Entity::createText(*em, difficultyLabelId, levelWording, {0, 0, 0, 255}, 20,
                        sizes_em[difficultyLabelId]);
+    Entity::createImage(*em, switchButtonId, Config::REFRESH_IMAGE);
 
     // Setting types for layout
     Entity::EntityIdCollection columns = {layoutId};
@@ -162,6 +164,8 @@ void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
     }
     Entity::EntityIdCollection textIds = {newGameButtonId, difficultyLabelId};
     Entity::renderTexts(em, i_renderer, textIds);
+    Entity::EntityIdCollection imageIds = {switchButtonId};
+    Entity::renderImages(em, i_renderer, imageIds);
     SDL_RenderPresent(i_renderer);
 }
 }  // namespace GameLoop
