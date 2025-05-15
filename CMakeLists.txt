@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 23)
 
-project(Sandbox VERSION 1.0.0)
+set(PROJECT_NAME Sandbox)
+
+project(${PROJECT_NAME} VERSION 1.0.0)
 
 set(SDL2_DIR /opt/homebrew/opt/sdl2)
 set(SDL2_IMAGE_DIR /opt/homebrew/opt/sdl2_image)
@@ -12,7 +14,7 @@ set(SDL2_TTF_DIR /opt/homebrew/opt/sdl2_ttf)
 
 
 include_directories(
-  Sandbox PUBLIC
+  ${PROJECT_NAME} PUBLIC
   ${SDL2_DIR}/include/SDL2
   ${SDL2_IMAGE_DIR}/include/SDL2
   ${SDL2_TTF_DIR}/include/SDL2
@@ -27,7 +29,7 @@ link_directories(
 
 
 
-add_executable(Sandbox
+add_executable(${PROJECT_NAME}
               main.cpp
               "Globals.h"
               "Engine/Column.h"
@@ -83,12 +85,12 @@ add_executable(Sandbox
               )
 
 
-target_link_libraries(Sandbox
+target_link_libraries(${PROJECT_NAME}
   SDL2
   SDL2_image
   SDL2_ttf
   )
 
-add_custom_command(TARGET Sandbox POST_BUILD
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:Sandbox>/assets)
+    ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets)
