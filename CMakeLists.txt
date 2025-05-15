@@ -8,6 +8,9 @@ set(SDL2_DIR /opt/homebrew/opt/sdl2)
 set(SDL2_IMAGE_DIR /opt/homebrew/opt/sdl2_image)
 set(SDL2_TTF_DIR /opt/homebrew/opt/sdl2_ttf)
 
+
+
+
 include_directories(
   Sandbox PUBLIC
   ${SDL2_DIR}/include/SDL2
@@ -21,6 +24,8 @@ link_directories(
     ${SDL2_IMAGE_DIR}/lib
     ${SDL2_TTF_DIR}/lib
 )
+
+
 
 add_executable(Sandbox
               main.cpp
@@ -54,6 +59,8 @@ add_executable(Sandbox
               "Engine_DO/World.cpp"
               "Engine_DO/WorldImpl.h"
               "Engine_DO/WorldImpl.cpp"
+              "Engine_DO/Text.h"
+              "Engine_DO/Text.cpp"
 
               "MS_DO/GameLoop.h"
               "MS_DO/GameLoop.cpp"
@@ -81,3 +88,7 @@ target_link_libraries(Sandbox
   SDL2_image
   SDL2_ttf
   )
+
+add_custom_command(TARGET Sandbox POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:Sandbox>/assets)

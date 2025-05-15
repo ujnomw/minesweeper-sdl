@@ -4,6 +4,7 @@
 #include <SDL_ttf.h>
 
 #include <string>
+#include <vector>
 
 #include "EntityID.h"
 
@@ -11,7 +12,20 @@ namespace Entity
 
 {
 struct EntityManager;
+
+struct Position
+{
+    int x = 0;
+    int y = 0;
+};
+
+struct Size
+{
+    int w = 0;
+    int h = 0;
+};
 using EntityType = std::string;
+
 struct Entity
 {
     EntityId d_id;
@@ -34,4 +48,5 @@ struct Entity
     // Button fields
     bool isDisabled;
 };
+using EntityCollection = std::vector<Entity>;
 }  // namespace Entity

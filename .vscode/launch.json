@@ -17,6 +17,10 @@
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
+        },
+        {
+          "description": "Break on C++ exceptions",
+          "text": "breakpoint set -E c++ -O on"
         }
       ]
     }

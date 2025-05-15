@@ -1,6 +1,7 @@
 #include "GameLoop.h"
 
 #include "Engine_DO/EntityManager.h"
+#include "Engine_DO/Text.h"
 #include "Globals.h"
 #include "Minesweeper/GameSettings.h"
 
@@ -81,8 +82,7 @@ Entity::EntityManager* init()
     Entity::EntityIdCollection sizeIds;
 
     // Grid
-    Entity::Size gridSize{(uint)GameSettings::GridWidth(),
-                          (uint)GameSettings::GridHeight()};
+    Entity::Size gridSize{GameSettings::GridWidth(), GameSettings::GridHeight()};
     sizes.push_back(gridSize);
     sizeIds.push_back(gridId);
     // New Game Button
@@ -108,6 +108,11 @@ Entity::EntityManager* init()
 
     // Set sizes for leave* elements
     Entity::setSize(sizes_em, sizeIds, sizes);
+
+    // Set element types
+    std::string newGameWording = "NEW GAME";
+    Entity::createText(*em, newGameButtonId, newGameWording, {0, 0, 0, 255}, 20,
+                       sizes_em[newGameButtonId]);
 
     // Setting types for layout
     Entity::EntityIdCollection columns = {layoutId};
@@ -140,9 +145,12 @@ void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
     auto& sizes_em = em.sizes;
     auto& positions_em = em.positions;
 
+    Entity::EntityIdCollection textIds = {newGameButtonId};
+    Entity::renderTexts(em, i_renderer, textIds);
+
     for (int id = 0; id < entities_em.size(); id++)
     {
-        auto e = entities_em[id];
+        auto& e = entities_em[id];
         auto [w, h] = sizes_em[id];
         if (w < 1 || h < 1) continue;
         auto [r, g, b, a] = e.d_backgroundColor;

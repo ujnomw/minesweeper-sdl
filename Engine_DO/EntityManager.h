@@ -8,17 +8,7 @@ namespace Entity
 {
 using EntityCollection = std::vector<Entity>;
 using EntityIdCollection = std::vector<EntityId>;
-struct Position
-{
-    uint x = 0;
-    uint y = 0;
-};
 
-struct Size
-{
-    uint w = 0;
-    uint h = 0;
-};
 struct EntityManager
 {
     EntityCollection entities;
@@ -34,7 +24,7 @@ struct EntityManager
     EntityId nextId = 0;
 };
 
-extern EntityManager* createManager(uint);
+extern EntityManager* createManager(int);
 
 extern bool createEntities(EntityCollection& i_entities, EntityIdCollection& i_ids,
                            EntityIdCollection& o_res, EntityId& nextId);

@@ -32,7 +32,7 @@ int main(int argc, char** argv)
     GameSettings::SetNextMode(DifficultyMode::Hard);
     GameSettings::UpdateSettings();
     Engine::Window GameWindow;
-    MinesweeperUI UI;
+    // MinesweeperUI UI;
 
     std::unique_ptr<Entity::EntityManager> em =
         std::unique_ptr<Entity::EntityManager>(GameLoop::init());
@@ -77,6 +77,8 @@ int main(int argc, char** argv)
                   << std::endl;
 #endif
     }
+    TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
     return 0;
 }

@@ -6,7 +6,7 @@
 namespace Entity
 {
 
-EntityManager* createManager(uint i_maxEntities)
+EntityManager* createManager(int i_maxEntities)
 {
     auto* em = new EntityManager();
     em->entities.resize(i_maxEntities);
@@ -88,8 +88,8 @@ void computeLayout(EntityCollection& entities, std::vector<EntityIdCollection>& 
     {
         if (entities[currentId].d_type == "row")
         {
-            uint w = 0;
-            uint maxH = 0;
+            int w = 0;
+            int maxH = 0;
             for (auto childId : children[currentId])
             {
                 w += sizes[childId].w;
@@ -105,8 +105,8 @@ void computeLayout(EntityCollection& entities, std::vector<EntityIdCollection>& 
         }
         if (entities[currentId].d_type == "column")
         {
-            uint maxW = 0;
-            uint H = 0;
+            int maxW = 0;
+            int H = 0;
             for (auto childId : children[currentId])
             {
                 H += sizes[childId].h;
