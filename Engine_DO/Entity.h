@@ -38,15 +38,19 @@ struct Entity
     // Text fields
     SDL_Surface* TextSurface{nullptr};
     TTF_Font* Font{nullptr};
-    SDL_Rect TextPosition{0, 0, 0, 0};
+    // SDL_Rect TextPosition{0, 0, 0, 0};
     SDL_Color Color{0, 0, 0, 255};
 
     // Image fields
     SDL_Surface* ImageSurface{nullptr};
-    SDL_Rect Destination{0, 0, 0, 0};
+    // SDL_Rect Destination{0, 0, 0, 0};
     int d_padding = 12;
     // Button fields
     bool isDisabled;
+
+    ~Entity() { 
+        printf("Entity destructor: %s, id: %d \n", d_type.c_str(), d_id); 
+    }
 };
 using EntityCollection = std::vector<Entity>;
 }  // namespace Entity

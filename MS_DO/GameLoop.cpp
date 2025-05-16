@@ -9,21 +9,21 @@
 namespace GameLoop
 {
 // Column
-const Entity::EntityId layoutId = 0;
+Entity::EntityId layoutId;
 // Grid
-const Entity::EntityId gridId = 1;
+Entity::EntityId gridId = 1;
 // Lower Two Rows Container
 // Could be row or col depending on the layout
-const Entity::EntityId lowerRowsContainerId = 2;
+Entity::EntityId lowerRowsContainerId = 2;
 // NewGame + Flag Row
-const Entity::EntityId newGameRowId = 3;
+Entity::EntityId newGameRowId = 3;
 // Diff Level Row
 Entity::EntityId difficultyRowId = 4;
 // Flag Counter Row
-const Entity::EntityId flagCounterId = 5;
+Entity::EntityId flagCounterId = 5;
 
 // New Game Button
-const Entity::EntityId newGameButtonId = 6;
+Entity::EntityId newGameButtonId = 6;
 // // New Game Text
 // Entity::EntityId newGameTextId = 7;
 
@@ -33,12 +33,48 @@ const Entity::EntityId newGameButtonId = 6;
 // Entity::EntityId flagCounterTextId = 9;
 
 // Diff Label Rect
-const Entity::EntityId difficultyLabelId = 10;
+Entity::EntityId difficultyLabelId = 10;
 // // Diff Label Text
 // Entity::EntityId difficultyTextId = 11;
 
 // Switch Button
-const Entity::EntityId switchButtonId = 12;
+Entity::EntityId switchButtonId = 12;
+// // Switch Image
+// Entity::EntityId switchImageId = 13;
+
+// I N D E X E S after creation
+
+// Column
+const Entity::EntityId layoutIndex = 0;
+// Grid
+const Entity::EntityId gridIndex = 1;
+// Lower Two Rows Container
+// Could be row or col depending on the layout
+const Entity::EntityId lowerRowsContainerIndex = 2;
+// NewGame + Flag Row
+const Entity::EntityId newGameRowIndex = 3;
+// Diff Level Row
+Entity::EntityId difficultyRowIndex = 4;
+// Flag Counter Row
+const Entity::EntityId flagCounterIndex = 5;
+
+// New Game Button
+const Entity::EntityId newGameButtonIndex = 6;
+// // New Game Text
+// Entity::EntityId newGameTextId = 7;
+
+// // Flag Counter Image
+// Entity::EntityId flagCounterImageId = 8;
+// // Flag Counter Text
+// Entity::EntityId flagCounterTextId = 9;
+
+// Diff Label Rect
+const Entity::EntityId difficultyLabelIndex = 10;
+// // Diff Label Text
+// Entity::EntityId difficultyTextId = 11;
+
+// Switch Button
+const Entity::EntityId switchButtonIndex = 12;
 // // Switch Image
 // Entity::EntityId switchImageId = 13;
 
@@ -50,9 +86,25 @@ Entity::EntityManager* init()
     auto& parents_em = em->parents;
     auto& sizes_em = em->sizes;
     auto& positions_em = em->positions;
+    auto& idsToIndexes_em = em->idsToIndexes;
 
     // UI init
 
+    Entity::EntityIdCollection res;
+    Entity::EntityIdCollection toCreate{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+
+    Entity::createEntities(entities_em, idsToIndexes_em, positions_em, sizes_em, res,
+                           em->nextId, em->nextIndex, 14);
+
+    layoutId = res[layoutIndex];
+    gridId = res[gridIndex];
+    lowerRowsContainerId = res[lowerRowsContainerIndex];
+    newGameRowId = res[newGameRowIndex];
+    difficultyRowId = res[difficultyRowIndex];
+    flagCounterId = res[flagCounterIndex];
+    newGameButtonId = res[newGameButtonIndex];
+    difficultyLabelId = res[difficultyLabelIndex];
+    switchButtonId = res[switchButtonIndex];
     // Layout heirarchy
     Entity::EntityIdCollection layoutChildren = {gridId, lowerRowsContainerId};
     Entity::setParent(parents_em, children_em, layoutChildren, layoutId);
@@ -72,11 +124,6 @@ Entity::EntityManager* init()
     // Entity::EntityIdCollection flagCounterChildren = {flagCounterImageId,
     //                                                   flagCounterTextId};
     // Entity::setParent(parents_em, children_em, flagCounterChildren, flagCounterId);
-
-    Entity::EntityIdCollection res;
-    Entity::EntityIdCollection toCreate{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
-
-    Entity::createEntities(entities_em, em->ids, toCreate, em->nextId);
 
     // Sizes
     std::vector<Entity::Size> sizes;
@@ -108,7 +155,7 @@ Entity::EntityManager* init()
     sizeIds.push_back(switchButtonId);
 
     // Set sizes for leave* elements
-    Entity::setSize(sizes_em, sizeIds, sizes);
+    Entity::setSize(sizes_em, idsToIndexes_em, sizeIds, sizes);
 
     // Set element types
     std::string newGameWording = "NEW GAME";
@@ -134,11 +181,11 @@ Entity::EntityManager* init()
     Entity::EntityType column = "column";
     Entity::EntityType row = "row";
 
-    Entity::setType(entities_em, columns, column);
-    Entity::setType(entities_em, rows, row);
+    Entity::setType(entities_em, idsToIndexes_em, columns, column);
+    Entity::setType(entities_em, idsToIndexes_em, rows, row);
 
-    Entity::computeLayout(entities_em, children_em, sizes_em, positions_em, layoutId,
-                          {Config::PADDING, Config::PADDING});
+    Entity::computeLayout(entities_em, idsToIndexes_em, children_em, sizes_em,
+                          positions_em, layoutId, {Config::PADDING, Config::PADDING});
     return em;
 }
 
