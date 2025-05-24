@@ -30,7 +30,6 @@ struct Entity
 {
     EntityId d_id;
     EntityType d_type;
-    SDL_Rect d_rect{0, 0, 0, 0};
 
     // Rectangle fields
     SDL_Color d_backgroundColor{255, 255, 255, 255};
@@ -44,13 +43,13 @@ struct Entity
     // Image fields
     SDL_Surface* ImageSurface{nullptr};
     // SDL_Rect Destination{0, 0, 0, 0};
-    int d_padding = 12;
     // Button fields
-    bool isDisabled;
-
-    ~Entity() { 
-        printf("Entity destructor: %s, id: %d \n", d_type.c_str(), d_id); 
-    }
+    Entity() = default;
+    Entity(EntityId);
+    Entity(const Entity& rhs);
+    Entity& operator=(const Entity& rhs);
+    Entity& operator=(Entity&& rhs) noexcept;
+    ~Entity();
 };
 using EntityCollection = std::vector<Entity>;
 }  // namespace Entity

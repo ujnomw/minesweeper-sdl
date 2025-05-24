@@ -65,6 +65,8 @@ add_executable(${PROJECT_NAME}
               "Engine_DO/Text.cpp"
               "Engine_DO/Image.h"
               "Engine_DO/Image.cpp"
+              "Engine_DO/TTFManager.h"
+              "Engine_DO/TTFManager.cpp"
 
               "MS_DO/GameLoop.h"
               "MS_DO/GameLoop.cpp"

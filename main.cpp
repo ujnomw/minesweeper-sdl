@@ -6,6 +6,7 @@
 
 #include "Engine/Window.h"
 #include "Engine_DO/EntityManager.h"
+#include "Engine_DO/TTFManager.h"
 #include "Engine_DO/World.h"
 #include "Engine_DO/WorldImpl.h"
 #include "Globals.h"
@@ -19,16 +20,16 @@ int main(int argc, char** argv)
 #ifdef SHOW_DEBUG_HELPERS
     Utils::CheckSDLError("SDL_Init");
 #endif
+    FontSystem::TTFManager ttf;
+#ifdef SHOW_DEBUG_HELPERS
+    Utils::CheckSDLError("TTF_Init");
+#endif
 
     IMG_Init(IMG_INIT_PNG);
 #ifdef SHOW_DEBUG_HELPERS
     Utils::CheckSDLError("IMG_Init");
 #endif
 
-    TTF_Init();
-#ifdef SHOW_DEBUG_HELPERS
-    Utils::CheckSDLError("TTF_Init");
-#endif
     GameSettings::SetNextMode(DifficultyMode::Hard);
     GameSettings::UpdateSettings();
     Engine::Window GameWindow;
@@ -77,7 +78,7 @@ int main(int argc, char** argv)
                   << std::endl;
 #endif
     }
-    TTF_Quit();
+    // TTF_Quit();
     IMG_Quit();
     SDL_Quit();
     return 0;
