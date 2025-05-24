@@ -9,12 +9,13 @@ namespace Entity
 void createText(EntityManager& i_em, EntityId i_id, std::string& i_content,
                 SDL_Color i_color, int i_fontSize, Size i_size)
 {
-    i_em.entities[i_id].d_type = "text";
-    i_em.entities[i_id].Font = TTF_OpenFont(Config::FONT.c_str(), i_fontSize);
-    i_em.entities[i_id].Color = i_color;
-    i_em.sizes[i_id] = i_size;
-    i_em.entities[i_id].TextSurface =
-        TTF_RenderUTF8_Blended(i_em.entities[i_id].Font, i_content.c_str(), i_color);
+    int index = i_em.idsToIndexes[i_id];
+    i_em.entities[index].d_type = "text";
+    i_em.entities[index].Font = TTF_OpenFont(Config::FONT.c_str(), i_fontSize);
+    i_em.entities[index].Color = i_color;
+    i_em.sizes[index] = i_size;
+    i_em.entities[index].TextSurface =
+        TTF_RenderUTF8_Blended(i_em.entities[index].Font, i_content.c_str(), i_color);
 }
 
 void renderTexts(EntityManager& i_em, SDL_Renderer* i_renderer, EntityIdCollection& i_ids)
@@ -22,11 +23,13 @@ void renderTexts(EntityManager& i_em, SDL_Renderer* i_renderer, EntityIdCollecti
     auto& entities_em = i_em.entities;
     auto& positions_em = i_em.positions;
     auto& sizes_em = i_em.sizes;
+    auto& idsToIndexes_em = i_em.idsToIndexes;
     for (auto& id : i_ids)
     {
-        auto& e = entities_em[id];
-        auto [x, y] = positions_em[id];
-        auto [w, h] = sizes_em[id];
+        int index = idsToIndexes_em[id];
+        auto& e = entities_em[index];
+        auto [x, y] = positions_em[index];
+        auto [w, h] = sizes_em[index];
         int surfaceW = e.TextSurface->w;
         int surfaceH = e.TextSurface->h;
 
