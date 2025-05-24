@@ -35,8 +35,8 @@ int main(int argc, char** argv)
     // MinesweeperUI UI;
 
     std::unique_ptr<Entity::EntityManager> em =
-        std::unique_ptr<Entity::EntityManager>(GameLoop::init());
-
+        std::unique_ptr<Entity::EntityManager>(Entity::createManager(14));
+    GameLoop::init(em.get());
     SDL_Event Event;
     bool shouldQuit{false};
 #ifdef FRAME_PERF_DEBUG

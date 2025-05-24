@@ -78,9 +78,8 @@ const Entity::EntityId switchButtonIndex = 12;
 // // Switch Image
 // Entity::EntityId switchImageId = 13;
 
-Entity::EntityManager* init()
+bool init(Entity::EntityManager* em)
 {
-    auto em = Entity::createManager(14);
     auto& entities_em = em->entities;
     auto& children_em = em->children;
     auto& parents_em = em->parents;
@@ -186,7 +185,7 @@ Entity::EntityManager* init()
 
     Entity::computeLayout(entities_em, idsToIndexes_em, children_em, sizes_em,
                           positions_em, layoutId, {Config::PADDING, Config::PADDING});
-    return em;
+    return true;
 }
 
 void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
