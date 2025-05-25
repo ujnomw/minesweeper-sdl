@@ -11,6 +11,7 @@
 #include "Engine_DO/WorldImpl.h"
 #include "Globals.h"
 #include "MS_DO/GameLoop.h"
+#include "MS_DO/TextureAtlas.h"
 #include "Minesweeper/GameSettings.h"
 #include "Minesweeper/UI.h"
 
@@ -36,7 +37,8 @@ int main(int argc, char** argv)
     // MinesweeperUI UI;
 
     std::unique_ptr<Entity::EntityManager> em =
-        std::unique_ptr<Entity::EntityManager>(Entity::createManager(14));
+        std::unique_ptr<Entity::EntityManager>(Entity::createManager(23));
+    TextureAtlas::initTextureAtlas(*em.get(), GameWindow.GetRenderer(), em->atlas);
     GameLoop::init(em.get());
     SDL_Event Event;
     bool shouldQuit{false};

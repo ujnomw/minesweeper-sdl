@@ -9,7 +9,8 @@ Window::Window()
     SDLWindow = SDL_CreateWindow(Config::GAME_NAME.c_str(), SDL_WINDOWPOS_UNDEFINED,
                                  SDL_WINDOWPOS_UNDEFINED, GameSettings::WindowWidth(),
                                  GameSettings::WindowsHeight(), 0);
-    d_renderer = SDL_CreateRenderer(SDLWindow, -1, SDL_RENDERER_ACCELERATED);
+    d_renderer = SDL_CreateRenderer(SDLWindow, -1,
+                                    SDL_RENDERER_ACCELERATED | SDL_TEXTUREACCESS_TARGET);
 }
 
 void Window::Render()
