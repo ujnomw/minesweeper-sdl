@@ -11,7 +11,7 @@ struct EntityManager;
 
 namespace TextureAtlas
 {
-const int W = 5 * Config::CELL_SIZE;
+const int W = 6 * Config::CELL_SIZE;
 const int H = 2 * Config::CELL_SIZE;
 const int d_side = Config::CELL_SIZE;
 
