@@ -212,8 +212,8 @@ void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
     Entity::renderTexts(em, i_renderer, textIds);
     Entity::EntityIdCollection imageIds = {switchButtonId};
     Entity::renderImages(em, i_renderer, imageIds);
-    SDL_Rect dst = {0, 0, 300, 100};
-    SDL_RenderCopy(i_renderer, em.atlas, NULL, &dst);
+    // SDL_Rect dst = {0, 0, 300, 100};
+    // SDL_RenderCopy(i_renderer, em.atlas, NULL, &dst);
     SDL_RenderPresent(i_renderer);
 }
 }  // namespace GameLoop
