@@ -47,8 +47,11 @@ struct Entity
     Entity() = default;
     Entity(EntityId);
     Entity(const Entity& rhs);
+    Entity(Entity&& rhs);
     Entity& operator=(const Entity& rhs);
     Entity& operator=(Entity&& rhs) noexcept;
+    void deleteResources(Entity* entityPtr = nullptr);
+    void clone(const Entity& rhs);
     ~Entity();
 };
 using EntityCollection = std::vector<Entity>;

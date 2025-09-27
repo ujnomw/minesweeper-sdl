@@ -10,7 +10,9 @@ set(SDL2_DIR /opt/homebrew/opt/sdl2)
 set(SDL2_IMAGE_DIR /opt/homebrew/opt/sdl2_image)
 set(SDL2_TTF_DIR /opt/homebrew/opt/sdl2_ttf)
 
-
+# Enable AddressSanitizer
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer -g")
+# set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} -fsanitize=address")
 
 
 include_directories(

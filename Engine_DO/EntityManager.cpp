@@ -29,7 +29,7 @@ bool createEntities(EntityCollection& i_entities, EntityIdCollection& i_ids,
         EntityId id = nextId++;
         i_ids[id] = nextIndex++;
         int index = i_ids[id];
-        i_entities[index] = Entity{id};
+        i_entities[index] = std::move(Entity{id});
         i_positions[index] = Position{};
         i_sizes[index] = Size{};
         o_res.push_back(id);

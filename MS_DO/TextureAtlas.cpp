@@ -72,6 +72,8 @@ void initTextureAtlas(Entity::EntityManager& i_em, SDL_Renderer* p_renderer,
     renderTexts(i_em, p_renderer, texts);
     // SDL_RenderClear(p_renderer);
     SDL_SetRenderTarget(p_renderer, NULL);
+    i_em.nextIndex = 0;
+    i_em.nextId = 0;
 }
 
 }  // namespace TextureAtlas
