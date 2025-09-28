@@ -4,7 +4,7 @@
 #include "Engine_DO/Image.h"
 #include "Engine_DO/Text.h"
 #include "Globals.h"
-#include "Minesweeper/GameSettings.h"
+#include "MS_DO/GameSettings.h"
 
 namespace GameLoop
 {

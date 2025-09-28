@@ -11,8 +11,8 @@
 #include "Engine_DO/WorldImpl.h"
 #include "Globals.h"
 #include "MS_DO/GameLoop.h"
+#include "MS_DO/GameSettings.h"
 #include "MS_DO/TextureAtlas.h"
-#include "Minesweeper/GameSettings.h"
 #include "Minesweeper/UI.h"
 
 int main(int argc, char** argv)
