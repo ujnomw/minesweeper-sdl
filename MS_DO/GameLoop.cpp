@@ -129,7 +129,8 @@ bool init(Entity::EntityManager* em)
     Entity::EntityIdCollection sizeIds;
 
     // Grid
-    Entity::Size gridSize{GameSettings::GridWidth(), GameSettings::GridHeight()};
+    Entity::Size gridSize{MS_DO::GameSettings::GridWidth(),
+                          MS_DO::GameSettings::GridHeight()};
     sizes.push_back(gridSize);
     sizeIds.push_back(gridId);
     // New Game Button
@@ -160,7 +161,7 @@ bool init(Entity::EntityManager* em)
     std::string newGameWording = "NEW GAME";
     Entity::createText(*em, newGameButtonId, newGameWording, {0, 0, 0, 255}, 20,
                        sizes_em[newGameButtonId]);
-    std::string levelWording = "LEVEL: " + GameSettings::GetNextMode();
+    std::string levelWording = "LEVEL: " + MS_DO::GameSettings::GetNextMode();
     Entity::createText(*em, difficultyLabelId, levelWording, {0, 0, 0, 255}, 20,
                        sizes_em[difficultyLabelId]);
     Entity::createImage(*em, switchButtonId, Config::REFRESH_IMAGE);
@@ -168,7 +169,7 @@ bool init(Entity::EntityManager* em)
     // Setting types for layout
     Entity::EntityIdCollection columns = {layoutId};
     Entity::EntityIdCollection rows = {difficultyRowId, newGameRowId};
-    if (GameSettings::GetMode() == Hard)
+    if (MS_DO::GameSettings::GetMode() == MS_DO::Hard)
     {
         rows.push_back(lowerRowsContainerId);
     }

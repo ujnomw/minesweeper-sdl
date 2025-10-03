@@ -2,6 +2,8 @@
 
 #include "Globals.h"
 
+namespace MS_DO
+{
 DifficultyMode GameSettings::d_mode = None;
 DifficultyMode GameSettings::d_nextMode = Medium;
 int GameSettings::d_bombCount = 0;
@@ -109,3 +111,4 @@ const std::string GameSettings::modeToText(DifficultyMode i_mode)
             break;
     }
 }
+}  // namespace MS_DO

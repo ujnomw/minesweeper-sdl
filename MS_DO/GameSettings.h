@@ -2,6 +2,8 @@
 
 #include <string>
 
+namespace MS_DO
+{
 enum DifficultyMode
 {
     Easy,
@@ -52,3 +54,4 @@ struct GameSettings
     static void updateGridAndWindow();
     static const std::string modeToText(DifficultyMode i_mode);
 };
+}  // namespace MS_DO

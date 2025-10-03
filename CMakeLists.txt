@@ -63,6 +63,8 @@ add_executable(${PROJECT_NAME}
               "Engine_DO/World.cpp"
               "Engine_DO/WorldImpl.h"
               "Engine_DO/WorldImpl.cpp"
+              "Engine_DO/Window.h"
+              "Engine_DO/Window.cpp"
               "Engine_DO/Text.h"
               "Engine_DO/Text.cpp"
               "Engine_DO/Image.h"

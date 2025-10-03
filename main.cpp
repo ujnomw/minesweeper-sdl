@@ -4,16 +4,15 @@
 #include <chrono>
 #include <memory>
 
-#include "Engine/Window.h"
 #include "Engine_DO/EntityManager.h"
 #include "Engine_DO/TTFManager.h"
+#include "Engine_DO/Window.h"
 #include "Engine_DO/World.h"
 #include "Engine_DO/WorldImpl.h"
 #include "Globals.h"
 #include "MS_DO/GameLoop.h"
 #include "MS_DO/GameSettings.h"
 #include "MS_DO/TextureAtlas.h"
-#include "Minesweeper/UI.h"
 
 int main(int argc, char** argv)
 {
@@ -31,9 +30,9 @@ int main(int argc, char** argv)
     Utils::CheckSDLError("IMG_Init");
 #endif
 
-    GameSettings::SetNextMode(DifficultyMode::Hard);
-    GameSettings::UpdateSettings();
-    Engine::Window GameWindow;
+    MS_DO::GameSettings::SetNextMode(MS_DO::DifficultyMode::Hard);
+    MS_DO::GameSettings::UpdateSettings();
+    Engine_DO::Window GameWindow;
     // MinesweeperUI UI;
 
     std::unique_ptr<Entity::EntityManager> em =
