@@ -82,6 +82,8 @@ add_executable(${PROJECT_NAME}
               "MS_DO/NewGameButton.cpp"
               "MS_DO/DifficultyLabel.h"
               "MS_DO/DifficultyLabel.cpp"
+              "MS_DO/SwitchButton.h"
+              "MS_DO/SwitchButton.cpp"
               
               "Minesweeper/Grid.h"
               "Minesweeper/Grid.cpp"

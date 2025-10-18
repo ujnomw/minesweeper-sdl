@@ -9,6 +9,7 @@
 #include "MS_DO/DifficultyLabel.h"
 #include "MS_DO/GameSettings.h"
 #include "MS_DO/NewGameButton.h"
+#include "MS_DO/SwitchButton.h"
 
 namespace GameLoop
 {
@@ -156,22 +157,13 @@ bool init(Entity::EntityManager* em)
     sizes.push_back(flagCounterSize);
     sizeIds.push_back(flagCounterId);
     // Switch
-    Entity::Size switchButtonSize{Config::FLAG_COUNTER_WIDTH,
-                                  Config::FOOTER_HEIGHT - Config::PADDING};
-    sizes.push_back(switchButtonSize);
-    sizeIds.push_back(switchButtonId);
+    {
+        SwitchButton::InitParams params = {switchButtonId, *em};
+        SwitchButton::init(params);
+    }
 
     // Set sizes for leave* elements
     Entity::setSize(sizes_em, idsToIndexes_em, sizeIds, sizes);
-
-    // Set element types
-    // std::string newGameWording = "NEW GAME";
-    // Entity::createText(*em, newGameButtonId, newGameWording, {0, 0, 0, 255}, 20,
-    //                    sizes_em[newGameButtonId]);
-    // std::string levelWording = "LEVEL: " + GameSettings::GetNextMode();
-    // Entity::createText(*em, difficultyLabelId, levelWording, {0, 0, 0, 255}, 20,
-    //                    sizes_em[difficultyLabelId]);
-    Entity::createImage(*em, switchButtonId, Config::REFRESH_IMAGE);
 
     // Create flag counter content
     auto countText = std::to_string(GameSettings::BombCount());
