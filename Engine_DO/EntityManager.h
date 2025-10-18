@@ -12,6 +12,8 @@ using EntityIdCollection = std::vector<EntityId>;
 struct EntityManager
 {
     EntityCollection entities;
+    // TODO: rework to make more efficient,
+    //       for example use indexes in the tree, not ids
     // id -> index in ^^^^^^^^^^ and all components
     EntityIdCollection idsToIndexes;
 

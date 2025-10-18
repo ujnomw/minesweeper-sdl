@@ -9,6 +9,7 @@ namespace Entity
 EntityManager* createManager(int i_maxEntities)
 {
     auto* em = new EntityManager();
+    em->entities.reserve(i_maxEntities);
     em->entities.resize(i_maxEntities);
     em->idsToIndexes.resize(i_maxEntities);
     em->children.resize(i_maxEntities);
@@ -29,7 +30,10 @@ bool createEntities(EntityCollection& i_entities, EntityIdCollection& i_ids,
         EntityId id = nextId++;
         i_ids[id] = nextIndex++;
         int index = i_ids[id];
-        i_entities[index] = std::move(Entity{id});
+        i_entities[index].deleteResources();
+        i_entities[index].d_type = "";
+        i_entities[index].d_id = id;
+        i_entities[index].d_backgroundColor = {255, 255, 255, 255};
         i_positions[index] = Position{};
         i_sizes[index] = Size{};
         o_res.push_back(id);
