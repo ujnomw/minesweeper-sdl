@@ -78,6 +78,10 @@ add_executable(${PROJECT_NAME}
               "MS_DO/TextureAtlas.cpp"
               "MS_DO/GameSettings.h"
               "MS_DO/GameSettings.cpp"
+              "MS_DO/NewGameButton.h"
+              "MS_DO/NewGameButton.cpp"
+              "MS_DO/DifficultyLabel.h"
+              "MS_DO/DifficultyLabel.cpp"
               
               "Minesweeper/Grid.h"
               "Minesweeper/Grid.cpp"

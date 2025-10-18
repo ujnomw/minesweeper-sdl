@@ -1,10 +1,14 @@
 #include "GameLoop.h"
 
+#include <string>
+
 #include "Engine_DO/EntityManager.h"
 #include "Engine_DO/Image.h"
 #include "Engine_DO/Text.h"
 #include "Globals.h"
+#include "MS_DO/DifficultyLabel.h"
 #include "MS_DO/GameSettings.h"
+#include "MS_DO/NewGameButton.h"
 
 namespace GameLoop
 {
@@ -27,10 +31,10 @@ Entity::EntityId newGameButtonId = 6;
 // // New Game Text
 // Entity::EntityId newGameTextId = 7;
 
-// // Flag Counter Image
-// Entity::EntityId flagCounterImageId = 8;
-// // Flag Counter Text
-// Entity::EntityId flagCounterTextId = 9;
+// Flag Counter Image
+Entity::EntityId flagCounterImageId = 8;
+// Flag Counter Text
+Entity::EntityId flagCounterTextId = 9;
 
 // Diff Label Rect
 Entity::EntityId difficultyLabelId = 10;
@@ -63,10 +67,10 @@ const Entity::EntityId newGameButtonIndex = 6;
 // // New Game Text
 // Entity::EntityId newGameTextId = 7;
 
-// // Flag Counter Image
-// Entity::EntityId flagCounterImageId = 8;
-// // Flag Counter Text
-// Entity::EntityId flagCounterTextId = 9;
+// Flag Counter Image
+Entity::EntityId flagCounterImageIndex = 8;
+// Flag Counter Text
+Entity::EntityId flagCounterTextIndex = 9;
 
 // Diff Label Rect
 const Entity::EntityId difficultyLabelIndex = 10;
@@ -80,6 +84,7 @@ const Entity::EntityId switchButtonIndex = 12;
 
 bool init(Entity::EntityManager* em)
 {
+    using namespace MS_DO;
     auto& entities_em = em->entities;
     auto& children_em = em->children;
     auto& parents_em = em->parents;
@@ -90,7 +95,6 @@ bool init(Entity::EntityManager* em)
     // UI init
 
     Entity::EntityIdCollection res;
-    Entity::EntityIdCollection toCreate{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
 
     Entity::createEntities(entities_em, idsToIndexes_em, positions_em, sizes_em, res,
                            em->nextId, em->nextIndex, 14);
@@ -104,6 +108,8 @@ bool init(Entity::EntityManager* em)
     newGameButtonId = res[newGameButtonIndex];
     difficultyLabelId = res[difficultyLabelIndex];
     switchButtonId = res[switchButtonIndex];
+    flagCounterImageId = res[flagCounterImageIndex];
+    flagCounterTextId = res[flagCounterTextIndex];
     // Layout heirarchy
     Entity::EntityIdCollection layoutChildren = {gridId, lowerRowsContainerId};
     Entity::setParent(parents_em, children_em, layoutChildren, layoutId);
@@ -134,20 +140,21 @@ bool init(Entity::EntityManager* em)
     sizes.push_back(gridSize);
     sizeIds.push_back(gridId);
     // New Game Button
-    Entity::Size newGameButtonSize{Config::NEW_GAME_BUTTON_WIDTH,
-                                   Config::FOOTER_HEIGHT - Config::PADDING};
-    sizes.push_back(newGameButtonSize);
-    sizeIds.push_back(newGameButtonId);
+    {
+        NewGameButton::InitParams params = {newGameButtonId, *em};
+        NewGameButton::init(params);
+    }
+    // Diff label
+    {
+        DifficultyLabel::InitParams params = {difficultyLabelId, *em,
+                                              GameSettings::GetNextMode()};
+        DifficultyLabel::init(params);
+    }
     // Flag Counter
     Entity::Size flagCounterSize{Config::FLAG_COUNTER_WIDTH,
                                  Config::FOOTER_HEIGHT - Config::PADDING};
     sizes.push_back(flagCounterSize);
     sizeIds.push_back(flagCounterId);
-    // Diff label
-    Entity::Size difficultyLabelSize{Config::DIFFICULTY_LABEL_WIDTH,
-                                     Config::FOOTER_HEIGHT - Config::PADDING};
-    sizes.push_back(difficultyLabelSize);
-    sizeIds.push_back(difficultyLabelId);
     // Switch
     Entity::Size switchButtonSize{Config::FLAG_COUNTER_WIDTH,
                                   Config::FOOTER_HEIGHT - Config::PADDING};
@@ -158,14 +165,18 @@ bool init(Entity::EntityManager* em)
     Entity::setSize(sizes_em, idsToIndexes_em, sizeIds, sizes);
 
     // Set element types
-    std::string newGameWording = "NEW GAME";
-    Entity::createText(*em, newGameButtonId, newGameWording, {0, 0, 0, 255}, 20,
-                       sizes_em[newGameButtonId]);
-    std::string levelWording = "LEVEL: " + MS_DO::GameSettings::GetNextMode();
-    Entity::createText(*em, difficultyLabelId, levelWording, {0, 0, 0, 255}, 20,
-                       sizes_em[difficultyLabelId]);
+    // std::string newGameWording = "NEW GAME";
+    // Entity::createText(*em, newGameButtonId, newGameWording, {0, 0, 0, 255}, 20,
+    //                    sizes_em[newGameButtonId]);
+    // std::string levelWording = "LEVEL: " + GameSettings::GetNextMode();
+    // Entity::createText(*em, difficultyLabelId, levelWording, {0, 0, 0, 255}, 20,
+    //                    sizes_em[difficultyLabelId]);
     Entity::createImage(*em, switchButtonId, Config::REFRESH_IMAGE);
 
+    // Create flag counter content
+    auto countText = std::to_string(GameSettings::BombCount());
+    Entity::createText(*em, flagCounterTextId, countText, {0, 0, 0, 255}, 20,
+                       sizes_em[flagCounterTextId]);
     // Setting types for layout
     Entity::EntityIdCollection columns = {layoutId};
     Entity::EntityIdCollection rows = {difficultyRowId, newGameRowId};
@@ -209,7 +220,7 @@ void render(Entity::EntityManager& em, SDL_Renderer* i_renderer)
         SDL_SetRenderDrawColor(i_renderer, r, g, b, a);
         SDL_RenderDrawRect(i_renderer, &rect);
     }
-    Entity::EntityIdCollection textIds = {newGameButtonId, difficultyLabelId};
+    Entity::EntityIdCollection textIds = {difficultyLabelId, newGameButtonId};
     Entity::renderTexts(em, i_renderer, textIds);
     Entity::EntityIdCollection imageIds = {switchButtonId};
     Entity::renderImages(em, i_renderer, imageIds);
